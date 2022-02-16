@@ -32,6 +32,151 @@
 
 ## 1. 手写shared_ptr
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f98cb4e6857d49a09cdda7e24ed35938.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
+<details>
+<summary>样例</summary>
+#include <iostream>
+#include <stdio.h>
+#include <mutex>
+using namespace std;
+
+class Person
+{
+public:
+	Person()
+	{
+		cout << "Person" << endl;
+	};
+	Person(int age)
+	{
+		cout << "--->Person age" << endl;
+		m_Age = age;
+	}
+	int m_Age;
+	~Person()
+	{
+		cout << "~Person" << endl;
+	}
+	void run()
+	{
+		cout << "--->Person run" << endl;
+	}
+};
+
+template<class T>//类模板
+class Shared_Ptr {
+public:
+	Shared_Ptr()
+	{
+		cout << "Share_Ptr" << endl;
+	}
+	Shared_Ptr(T* ptr)//:
+		//m_ptr(ptr)
+		//,m_pRefCount(new int(1))
+		//,m_pMutex(new mutex)
+	{
+		m_ptr = ptr;
+		m_pRefCount = new int(1);
+		m_pMutex = new mutex;
+		cout << "-->Shared_ptr"<<endl;
+	}
+
+	~Shared_Ptr()
+	{
+		Release();
+	}
+	//拷贝构造函数
+	Shared_Ptr(const Shared_Ptr<T>& p)
+	{
+		m_ptr = p.m_ptr;
+		m_pRefCount = p.m_pRefCount;
+		m_pMutex = p.m_pMutex;
+		AddRefCount();
+	}
+
+	//= 操作符的拷贝赋值函数
+	Shared_Ptr<T>& operator=(const Shared_Ptr<T>& p)
+	{
+		if (m_ptr != p.m_ptr)
+		{
+			//要先释放原来的旧资源
+			Release();
+
+			//共享管理新对象的资源，并增加引用计数
+			m_ptr = p.m_ptr;
+			m_pRefCount = p.m_pRefCount;
+			m_pMutex = p.m_pMutex;
+			AddRefCount();
+		}
+	}
+
+	T& operator*()
+	{
+		return *m_ptr;
+	}
+	T* operator&()
+	{
+		return m_ptr;
+	}
+
+	int UseCount()
+	{
+		return m_pRefCount;
+	}
+
+	T* Get()
+	{
+		return m_ptr;
+	}
+
+
+	//增加引用计数的方式
+	void AddRefCount()
+	{
+		m_pMutex->lock();
+		++(*m_pRefCount);
+		m_pMutex->unlock();
+	}
+
+private:
+	void Release()
+	{
+		bool deleteflag = false;
+		m_pMutex->lock();
+		if (*m_pRefCount == 0)
+		{
+			delete m_pRefCount;
+			delete m_ptr;
+			deleteflag = true;
+		}
+		m_pMutex->unlock();
+		if (deleteflag == true)
+		{
+			delete m_pMutex;
+		}
+
+	}
+	T* m_ptr;
+	int* m_pRefCount;
+	mutex* m_pMutex;
+};
+
+void test01()
+{
+	Shared_Ptr<Person> p(new Person(3));
+}
+
+int main()
+{
+	{
+		cout << 1 << endl;
+		test01();
+		cout << 2 << endl;
+	}
+
+	getchar();
+	return 0;
+}
+</details>
 
 `code`
 ```c
