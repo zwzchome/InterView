@@ -1,4 +1,4 @@
-@[toc](目录)
+
 # 前言
 坚持下去很难，但不坚持永远都无法获得成功~
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/ead16739990e48a7bf3b341ed539f4e9.gif)
@@ -34,12 +34,7 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f98cb4e6857d49a09cdda7e24ed35938.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 <details>
-<summary>Title</summary>
-
-content!!!
-</details>
-
-`code`
+<summary>code</summary>
 ```c
 #include <iostream>
 #include <stdio.h>
@@ -184,6 +179,10 @@ int main()
 	return 0;
 }
 ```
+</details>
+
+
+
 ## 2. [请说出二分查找的实现思路及时空复杂度](https://blog.csdn.net/nishiwodeangel/article/details/10748615)
 答：首先使用二分查找算法的前提是数组是有序数组，接下来，讲一下具体的算法思路:
 
