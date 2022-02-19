@@ -37,9 +37,7 @@
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/f98cb4e6857d49a09cdda7e24ed35938.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
 
 <details>
-<summary>code</summary>
-
-
+<summary>`code`</summary>
 
 ```java
 #include <iostream>
@@ -319,7 +317,6 @@ vector所拥有的变量如下：
 <details>
 <summary>code</summary>
 
-
 ```c
 template <class T, class Alloc = alloc>
 class vector
@@ -354,7 +351,6 @@ protected:
 
 <details>
 <summary>code</summary>
-
 
 ```c
 void push_back(const T& x)
