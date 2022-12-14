@@ -5,9 +5,16 @@
 
 # 正文
 
+## 当前复习进度
+
+31_2_2.中序遍历迭代
+
+
 ## 经验
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 如何获得结构成员相对于结构开头的字节偏移量：offsetof(S,x);
@@ -35,6 +42,7 @@
 23. 不要返回裸指针，类似于：int *get_value();
 24. 优先用栈而不是堆
 ```
+
 </details>
 
 
@@ -44,6 +52,7 @@
 
 <details>
 <summary>点击查看代码</summary>
+
 
 ```c
 #include <iostream>
@@ -203,6 +212,7 @@ int main()
    <summary>点击查看代码</summary>
 
 
+
    ```c
 >1. 对于该有序数组a，我们可以定义两个变量，一个叫Left，其值为0，一个叫Right，为数组的长度-1。接下来，我们可以确定该有序数组的中间者为[(left+right)/2]。
 >2. 接下来，判断a[(left+right)/2]是否等于所要查找的值，若大于所要查找的值，则将left指针指向mid+1((left+right)/2)。若小于所要查找的值，则将right指针指向mid-1。所等于则返回当前Mid值。
@@ -220,19 +230,24 @@ int main()
    <summary>答案</summary>
 
 
+
    ```c
 答： 不能.
->1. 因为我们在构造一个对象的时候，必须要知道这个对象的类型，而虚函数的特性就是在运行期间确定实际的类型的。
->2. 并且，虚函数的执行是依赖于虚函数表的，而在构造对象期间，虚函数表还未初始化。注意：这个虚函数表是存放在**全局/静态数据区**的(全局静态变量，未初始化的放在BSS段，初始化的放在Data段。	
-[参考1](https://blog.csdn.net/m0_46405589/article/details/110820964)
+ 1. 因为我们在构造一个对象的时候，必须要知道这个对象的类型，而虚函数的特性就是在运行期间确定实际的类型的。
+ 2. 并且，虚函数的执行是依赖于虚函数表的，而在构造对象期间，虚函数表还未初始化。注意：这个虚函数表是存放在**全局/静态数据区**的(全局静态变量，未初始化的放在BSS段，初始化的放在Data段。	
+ 3.  虚函数表的创建时机: 虚函数表创建时机是在编译期间。编译期间编译器就为每个类确定好了对应的虚函数表里的内容。所以在程序运行时，编译器会把虚函数表的首地址赋值给虚函数表指针，所以，这个虚函数表指针就有值了.
+
    ```
 
    </details>
+
+[参考1](https://blog.csdn.net/m0_46405589/article/details/110820964)
 
 #### 2.1. C++类有继承时，析构函数必须为虚函数吗？
 
    <details>
    <summary>点击查看代码</summary>
+
 
 
    ```c
@@ -248,6 +263,7 @@ int main()
    <summary>点击查看代码</summary>
 
 
+
 ```c
 1. 纯虚函数只有定义，没有实现；而虚函数不仅有定义，还有实现。
 2. 包含纯虚函数的类不能定义其对象，而包含虚函数的可以。
@@ -260,6 +276,7 @@ int main()
 
    <details>
    <summary>点击查看代码</summary>
+
 
    ```c
 虚函数的原理采用虚函数表。
@@ -275,6 +292,7 @@ int main()
 
    <details>
    <summary>点击查看代码</summary>
+
 
 
    ```
@@ -297,6 +315,7 @@ int main()
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -348,6 +367,7 @@ class Derived : public Base
    <details>
    <summary>点击查看代码</summary>
 
+
    ```
 答案：C++中虚函数表位于只读数据段（.rodata），也就是C++内存模型中的常量区；而虚函数则位于代码段（.text），也就是C++内存模型中的代码区。
 
@@ -373,6 +393,7 @@ class Derived : public Base
 <summary>答案</summary>
 
 
+
 ```c
 在C++的标准规格说明书中说到，编译器必需要保证虚函数表的指针存在于对象实例中最前面的位置（这是为了保证正确取到虚函数的偏移量）。这意味着我们通过对象实例的地址得到这张虚函数表，然后就可以遍历其中函数指针，并调用相应的函数。
 ```
@@ -381,6 +402,7 @@ class Derived : public Base
 
 <details>
 <summary>取虚表地址和虚函数地址的方式</summary>
+
 
 
 ```c
@@ -434,6 +456,7 @@ int main()
    <details>
    <summary>点击查看代码</summary>
 
+
 ```c
 问题一：通过父类型的指针访问子类自己的虚函数
 Base1 *b1 = new Derive();
@@ -444,7 +467,7 @@ b1->f1();
 另外，如果父类的虚函数是private或是protected的，但这些非public的虚函数同样会存在于虚函数表中，所以，我们同样可以使用访问虚函数表的方式来访问这些non-public的虚函数，这是很容易做到的。
 [参考](https://blog.csdn.net/qq_41375609/article/details/107050911)
 
-   ```
+```
 
    </details>
 
@@ -456,6 +479,7 @@ b1->f1();
    <summary>答案</summary>
 
 
+
    ```c
 虚就虚在所谓"推迟联编"或者"动态联编"上，一个类函数的调用并不是在编译时刻被确定的，而是在运行时刻被确定的
    ```
@@ -464,8 +488,12 @@ b1->f1();
 
 #### 2.9、谈谈你对虚函数表结构的理解，在单继承，多继承，虚继承情况下表的结构是怎么样的?
 
+![](https://img-blog.csdnimg.cn/img_convert/b637d68a93e00c6379319675e6a17367.jpeg)
+
+
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -489,6 +517,7 @@ b1->f1();
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 从语法上讲，调用完全没有问题。但从效果上讲，往往不能达到需要的目的。
 **原因**:
@@ -504,6 +533,7 @@ b1->f1();
 <summary>答案</summary>
 
 
+
 ```c
 a. 将类的构造函数声明为private。
 b. 二是，将该类虚继承一个父类，但是该父类的构造函数是带private属性的。(其实子类可以继承有private构造函数的父类，那必定是有权限访问父类的private成员，这是通过将子类声明为父类的friend class了。)
@@ -516,14 +546,17 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
 </details>
 
 #### 2.12为什么纯虚函数一定要被子类继承？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 由于纯虚函数在虚函数表项中是为0的，也就是是指向一个不存在的函数的。那么也就意味着，该类是不能被实例化的，因为编译器是不允许去实例化一个有指向不存在函数的类的。
 
 2. 那么就以为着如果子类继承了这个抽象类，那么虚函数表也就也有一个表项是0，指向不存在的函数。如果子类不去实现，覆盖这个表项的话，那么肯定就没办法进行实例化。
 ```
+
 </details>
 
 ### 3. C++ 四种强制类型转换
@@ -534,6 +567,7 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
 
    <details>
    <summary>答案</summary>
+
 
 
    ```
@@ -547,6 +581,7 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
 
    <details>
    <summary>答案</summary>
+
 
 
  ```
@@ -564,6 +599,7 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
    <summary>答案</summary>
 
 
+
    ```
 >1. 用于类层次结构中父类和子类指针或引用的无条件转换。
 >2. 用于基本数据类型之间的转换。
@@ -576,6 +612,7 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
 
    <details>
    <summary>答案</summary>
+
 
    ```
 作用：用于子类转父类时的有条件类型转换，会进行类型检查。
@@ -595,6 +632,7 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
 <details>
 <summary>dynamic_cast运算符的主要用途</summary>
 
+
 ```c
 1. 将基类的指针或引用安全地转换成派生类的指针或引用，并用派生类的指针或引用调用非虚函数。
 2. 如果是基类指针或引用调用的是虚函数无需转换就能在运行时调用派生类的虚函数。
@@ -604,6 +642,7 @@ c. 使用final关键字，C++11中允许将类标记为final，方法时直接�
 
 <details>
 <summary>dynamic_cast怎么保证安全的？</summary>
+
 
 
 ```c
@@ -631,6 +670,7 @@ c. dynamic_cast 的转换规则是：只允许将指向派生类对象的指针�
    <summary>答案</summary>
 
 
+
    ```
 1. 用在任意的指针之间的转换。
 2. 引用之间的转换。
@@ -644,6 +684,7 @@ c. dynamic_cast 的转换规则是：只允许将指向派生类对象的指针�
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -662,6 +703,7 @@ c. dynamic_cast 的转换规则是：只允许将指向派生类对象的指针�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 答案：sort->unique->erase
@@ -686,6 +728,7 @@ c. dynamic_cast 的转换规则是：只允许将指向派生类对象的指针�
 
  <details>
 <summary>vector的底层源代码</summary>
+
 
 ```c
 template<class T, class Alloc = alloc>
@@ -760,6 +803,7 @@ void vector<T, Alloc>::insert_aux(iterator position, const T& x) {
 <details>
 <summary> vector所拥有的变量如下</summary>
 
+
 ```c
 template <class T, class Alloc = alloc>
 class vector
@@ -780,6 +824,7 @@ protected:
 <details>
 <summary>答案</summary>
 
+
 ```c
 底层原理：一段连续线性内存空间。以上定义中迭代器start和finish之间是已经被使用的空间范围，end_of_storage是整块连续空间包括备用空间的尾部。end_of_storage存在的原因是为了降低空间配置的成本，vector实际分配空间大小的时候会比客户端需求的大一些，以便于未来的可能的扩展。
     
@@ -794,6 +839,7 @@ protected:
 
    <details>
    <summary>答案</summary>
+
 
    ```
 **重新申请，移动元素，释放空间**
@@ -811,6 +857,7 @@ protected:
 
    <details>
    <summary>源代码</summary>
+
 
    ```c
 void push_back(const T& x)
@@ -874,6 +921,7 @@ void vector<T,Alloc>::insert_aux(iterator position,const T&x)
 <details>
 <summary>删除</summary>
 
+
 ```c
 对于序列式容器（vector、deque、list），删除当前的iterator会使后面所有元素的iterator都失效。这是因为vector，deque使用了连续分配的内存，删除一个元素导致后面所有的元素会向前移动一个位置。使用erase方法后，返回的是下一个有效的iterator。例如：
 
@@ -893,6 +941,7 @@ for (iter = val.begin(); iter != val.end(); ){
 <details>
 <summary>vector的erase方法</summary>
 
+
 ```c
 iterator erase(iterator position){
     if(position + 1 != end())
@@ -907,6 +956,7 @@ iterator erase(iterator position){
 
 <details>
 <summary>vector的插入</summary>
+
 
 ```c
 //往某个位置插入一个元素，则这个位置之后的元素都要后移，因此后面的迭代器都会失效；如果引起内存的重新配置，所有的迭代器都将失效。
@@ -927,17 +977,22 @@ vector<int> val = { 1,2,3,4,5,6 };
  [emplace_back VS push_back](https://haoqchen.site/2020/01/17/emplace_back-vs-push_back/)
 
 #### 4.6 扩容会导致效率低下，那如何避免动态扩容呢？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 如果在插入之前，可以预估vector存储元素的个数，提前将底层容量开辟好即可。如果插入之前进行reserve，只要空间给足，则插入时不会扩容，如果没有reserve，则会边插入边扩容，效率极其低下。
 ```
+
 </details>
 
 #### 4.7 为什么以1.5倍或者2倍的方式扩容，而不是使用等长扩容？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 计算结论：等长方式扩容后，push_back的时间复杂度为O(N)
@@ -945,22 +1000,28 @@ vector<int> val = { 1,2,3,4,5,6 };
 
 所以选择倍数的方式进行扩容。
 ```
+
 </details>
 
 
 #### 4.8 为什么选择以1.5倍或者2倍方式进行扩容？而不是3倍4倍扩容？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1). 使用2倍（k=2）扩容机制扩容时，每次扩容后的新内存大小必定大于前面的总和。
 2). 而使用1.5倍（k=1.5)扩容时，在几次扩展以后，可以重用之前的内存空间了。
 ```
+
 </details>
 
 #### 4.9 vs为什么选择1.5倍，linux为什么选择2倍？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1) vs为什么选择1.5倍
@@ -983,12 +1044,14 @@ e.  通过伙伴系统管理空闲分区的了解，可以看到在伙伴系统�
 vector在push_back以成倍增长可以在均摊后达到O(1)的时间复杂度，相对于增长指定大小的O(n)时间复杂度更好。
 为了防止申请内存的浪费，现在使用较多的有2倍与1.5倍的增长方式，而1.5倍的增长方式可以更好的实现对内存的重复利用。
 ```
+
 </details>
 
 ### 5.深拷贝和浅拷贝
 
    <details>
    <summary>浅拷贝</summary>
+
 
    ```
 浅拷贝：实体相同，值拷贝
@@ -999,6 +1062,7 @@ vector在push_back以成倍增长可以在均摊后达到O(1)的时间复杂度�
 
 <details>
 <summary>深拷贝</summary>
+
 
 ```c
 深拷贝：开辟空间，内容拷贝。
@@ -1011,6 +1075,7 @@ vector在push_back以成倍增长可以在均摊后达到O(1)的时间复杂度�
 
 <details>
 <summary>LRU的简介、思路、算法逻辑</summary>
+
 
 ```c
 **简介**
@@ -1031,6 +1096,7 @@ vector在push_back以成倍增长可以在均摊后达到O(1)的时间复杂度�
 
    <details>
    <summary>源代码</summary>
+
 
    ```c
 #include <iostream>
@@ -1178,6 +1244,7 @@ private:
    <summary>静态多态的实现方式:</summary>
 
 
+
    ```c
 静态多态性是通过**重载**实现的，在程序编译时系统就可以确定调用哪个函数，因此也称为编译时的多态性.
 
@@ -1198,6 +1265,7 @@ private:
    <summary>答案</summary>
 
 
+
    ```c
 动态多态性则是通过虚函数实现的，在程序运行时才能决定操作的对象，因此也被称为运行时的多态性。程序运行到动态绑定时，通过该指针所指向的对象类型，通过vtpr找到虚函数表，然后调用相应的方法，即可实现多态。
    ```
@@ -1206,6 +1274,7 @@ private:
 
 <details>
 <summary>示例</summary>
+
 
 ```c
 #include <iostream>
@@ -1249,6 +1318,7 @@ int main()
    <details>
    <summary>答案</summary>
 
+
    ```java
 方法:该函数的最前面有virtual进行声明。就会为其搞一个虚函数表，也就是VTABLE。
     
@@ -1264,6 +1334,7 @@ VATBLE的介绍:
 
    <details>
    <summary>答案</summary>
+
 
    ```java
 答案：由于C与C++函数在内部对函数名字的不同修饰方式，决定了C语言是没有重载的。
@@ -1291,12 +1362,46 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 
 #### 7.2 多态性指的是什么？(什么是多态)
 
-   <details>
-   <summary>答案</summary>
+![在这里插入图片描述](https://img-blog.csdnimg.cn/06fce2505e254cc0910a21e98948be01.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/3963a876b951429a982f1233d87c8c19.png)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/9ff7f3f315dc48eea0722ea8f4663536.png)
+
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1. 在有继承情况下，只要基类有虚函数，子类不论实现或没实现，都有虚函数表。
+
+2. 在多继承情况下，有多少个基类就有多少个虚函数表指针，前提是基类要有虚函数才算上这个基类。
+
+ClassA* a = new ClassC;
+a->func1();          // "ClassA::func1()"   隐藏ClassB::func1()               
+a->func2();          // "ClassA::func2()"	隐藏ClassC::func2()
+a->vfunc1();	     // "ClassB::vfunc1()"	ClassB把ClassA::vfunc1()覆盖了
+a->vfunc2();	     // "ClassC::vfunc2()"	ClassC把ClassA::vfunc2()覆盖了
+
+ClassB* b = new ClassC;
+b->func1();				// "ClassB::func1()"	有权限操作时，子类优先
+b->func2();				// "ClassA::func2()"	隐藏ClassC::func2()
+b->vfunc1();			// "ClassB::vfunc1()"	ClassB把ClassA::vfunc1()覆盖了
+b->vfunc2();			// "ClassB::vfunc2()"	ClassC把ClassA::vfunc2()覆盖了
+
+```
+
+</details>
+
+[参考](https://blog.csdn.net/qq_36359022/article/details/81870219)
+
+<details>
+<summary>答案</summary>
+
 
 
    ```c
-答：
+答: 其实多态就是在运行时根据对象的实际类型调用响应的函数。
+
 **说法一**：
     1. 多态性指的是相同对象在接收不同消息   或     不同对象接收相同消息产生不同的实现动作。
 	2. 多态支持运行时多态和编译时多态。编译时多态是由子类的重载所实现的，而运行时多态是由虚函数实现的。多态的目的是为了代码模块化和接口重用。
@@ -1318,6 +1423,7 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
    <summary>答案</summary>
 
 
+
    ```
 1. 构造函数中不能使用虚函数。因为我们在创建一个对象时是需要知道该对象的类型的，而虚函数的特性就是在运行时才能确定对象的类型。
 2. 析构函数则必须用多态，否则在调用析构函数时，没办法根据调用对象的类型调用相应的析构函数，有写对象的内存有可能不会被释放。
@@ -1325,11 +1431,12 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 
    </details>
 
-  
+
 #### 7.4. 讲一下对多态的理解(多态有哪些实现方式?)
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 **概念**
@@ -1348,6 +1455,7 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 答：实现原理是虚函数表。虚函数表是一个存储类成员函数指针的数据结构，因此在运行时，通过该数据结构，来确定要调用的是基类的函数还是子类的函数。
@@ -1372,6 +1480,8 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 2. 子类的fun()函数是重写了父类的，所以无论写不写virtual，编译器都会给子类对象添加一个virtual和vptr指针，指向子类的虚函数表，这个虚函数表存放了子类fun()函数的函数指针。
 
 3. 指向p->fun()时，编译器会检测到fun()是一个虚函数，所以会**在运行时，动态的根据指向的对象，找到这个对象的vptr，然后找到这个对象的虚函数表，最后调用虚函数表里对应的函数，从而实现多态**
+    
+4. 虚函数表存放在可执行文件的.rodata数据段之中。
    ```
 
    </details>
@@ -1384,6 +1494,7 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 
 <details>
 <summary>定义</summary>
+
 
 ```c
 定义1：
@@ -1423,6 +1534,7 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
    <summary>答案</summary>
 
 
+
    ```c
 类型标识符 *函数名(参数表)     int *f(x，y); 
 
@@ -1436,18 +1548,22 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
    ```
 
    </details>
+
 <details>
 <summary>最简单的辨别方式</summary>
+
 
 ```c
 就是看函数名前面的指针*号有没有被括号（）包含，如果被包含就是**函数指针**，反之则是**指针函数**。
 ```
+
 </details>
 
 #### 7.6 虚函数的使用场景
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 1. 在有继承关系的类中，析构函数最好使用虚函数。
@@ -1464,12 +1580,16 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
    <details>
    <summary>什么样的函数不能被声明为虚函数？</summary>
 
+
    ```c
-> 1. **普通函数**不属于成员函数，是不能被继承的。普通函数只能被重载，不能被重写。因此声明为虚函数没有意义。因为编译器会在编译时绑定函数。而多态体是在运行时绑定，通常通过基类指针子类对象实现绑定。
-> 2. **友元函数**不属于类的成员函数，不能被继承，对于没有继承特性的函数没有虚函数的说法。友元函数
+> 1. **普通函数**：不属于成员函数，是不能被继承的。普通函数只能被重载，不能被重写。因此声明为虚函数没有意义。因为编译器会在编译时绑定函数。而多态体是在运行时绑定，通常通过基类指针子类对象实现绑定。
+> 2. **友元函数**：不属于类的成员函数，不能被继承，对于没有继承特性的函数没有虚函数的说法。友元函数
 > 3. **构造函数**：a.构造函数时用来初始化对象的，例如，子类可以继承基类的构造函数，那么子类对象得到构造将使用基类的构造函数，而基类构造函数并不知道子类有什么成员，所以不能使用继承。b.另一个角度是，多态是通过基类指针指向子类对象来实现多态的，在对象构造之前并没有对象产生，因此无法使用多态，这是矛盾的。
 > 4. **内联成员函数**：该函数的作用是为了在代码中直接展开，减少函数调用的代价。也就是内联函数时在编译时展开的。在编译的时候，将这个内联函数的代码副本放置在每个调用该函数的地方。而多态，是在运行时绑定的，所以显然，相互违背。
 > 5. **静态成员函数**：该函数理论上是可继承的。但静态成员函数是在编译时确定的，无法动态绑定。不支持多态。
+1）static成员不属于任何类对象或类实例，所以即使给此函数加上virtual也是没有任何意义的。
+2）静态与非静态成员函数之间有一个主要的区别。那就是静态成员函数没有隐藏的this指针。对于虚函数，它的调用恰恰需要this指针。在有虚函数的类实例中，this指针调用vptr指针，vptr找到vtable(虚函数列表)，通过虚函数列表找到需要调用的虚函数的地址。总体来说虚函数的调用关系是：this指针->vptr->vtable ->virtual虚函数。所以说，static静态函数没有this指针，也就无法找到虚函数了
+> 6. **成员函数模板**: 不能是虚函数。因为c++ 编译器在解析一个类的时候就要确定虚函数表的大小，如果允许一个虚函数是模板函数，那么compiler就需要在parse这个类之前扫描所有的代码，找出这个模板成员函数的调用（实例化），然后才能确定vtable的大小，而显然这是不可行的，除非改变当前compiler的工作机制。因为类模板中的成员函数在调用的时候才会创建
 
    ```
 
@@ -1480,9 +1600,10 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 在类的成员函数中能调用delete this 吗？
-可以，但要注意，在delete this之后，不能再涉及这个对象的数据成员和虚函数。
+可以，但要注意，在delete this之后，当调用delete this时，类对象的内存空间被释放。不能再涉及这个对象的数据成员和虚函数。
 原因是：类对象在声明之后，系统会分配内存空间，这个内存空间中存有的数据是：数据成员和虚函数表指针。
 所以，一旦delete this的话，该内存空间被释放，那么就不能再操作数据成员以及调用虚函数了。但按理说是应该程序崩溃的，可实际上，会出现不可告知的情况。因为该内存空间被释放，并不一定会马上被回收。所以，会出现不可预期的情况。
 
@@ -1498,11 +1619,13 @@ C++的函数名修饰规则有些复杂，但是信息更充分，通过分析�
 <details>
 <summary>答案</summary>
 
+
 ```c
 当我们定义一个类的成员函数时，如果后面使用"=delete"去修饰，那么就表示这个函数被定义为deleted，也就意味着这个成员函数不能再被调用，否则就会出错。
 int func(int data)=delete;
 在C++11之前，我们不希望一个类被拷贝，就会把构造函数定义为private,但在。
 ```
+
 </details>
 
 
@@ -1515,6 +1638,7 @@ int func(int data)=delete;
 <details>
 <summary>答案</summary>
 
+
 ```c
 const是用来修饰常类型的类型修饰符，常类型的对象和变量的值不能更新的。const修饰的值并不是真的常量，它只是告诉编译器该变量不能出现在赋值符号的左边。
 ```
@@ -1525,6 +1649,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -1543,6 +1668,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 
 
 
+
 ```c
 1. const全局变量最初在编译器是保存在符号表的，但在第一次使用的时候，为其分配内存，将其保存在只读数据段。不可通过指针对const全局变量进行修改。
 
@@ -1555,6 +1681,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -1577,6 +1704,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 为了替换预处理指令，摒弃其缺点(无法进行类型检查)，继承其优点，并发扬光大.
 
@@ -1598,6 +1726,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 <details>
 <summary>答案</summary>
 
+
 ```c
 如果在C语言中，用const定义了一个常量。那么按理说，应该该值是不可更改的，可实际上，是可以通过指向一个变量地址的指针去指向它，然后通过*p1去健个修改b的值。
 ```
@@ -1606,8 +1735,10 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 
 
 ##### 1_6. const的实战用途
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 对变量来说:防止一个变量被更改。
@@ -1616,12 +1747,14 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 4. 对类的成员函数来说: 若指定该函数为const，则表明其实一个常函数，不能修改类的成员变量。
 5. 对成员函数的返回值来说: 若指定返回值为const,则该返回值就不是一个左值。
 ```
+
 </details>
 
 #### 2. const如何修改
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 1. 方法一：在const前面加上volatile.
@@ -1631,8 +1764,10 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
    </details>
 
 #### 3. const常见例子
+
 <details>
-<summary>答案</summary>
+<summary>例子1</summary>
+
 
 ```c
 1. const int a;//a是一个常整型数
@@ -1641,6 +1776,58 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 4. int *const a;//a是一个指向整 型数的常指针（也就是说，指针指向的整型数是可以修改的，但指针是不可修改的）
 5. int const *a const;//a是一个指向常整型数的常指针（也就是说，指针指向的整型 数是不可修改的，同时指针也是不可修改的）
 ```
+
+</details>
+
+<details>
+<summary>例子2</summary>
+
+
+```c
+// 类
+class A
+{
+private:
+    const int a;                // 常对象成员，可以使用初始化列表或者类内初始化
+
+public:
+    // 构造函数
+    A() : a(0) { };
+    A(int x) : a(x) { };        // 初始化列表
+
+    // const可用于对重载函数的区分
+    int getValue();             // 普通成员函数
+    int getValue() const;       // 常成员函数，不得修改类中的任何数据成员的值
+};
+
+void function()
+{
+    // 对象
+    A b;                        // 普通对象，可以调用全部成员函数
+    const A a;                  // 常对象，只能调用常成员函数
+    const A *p = &a;            // 指针变量，指向常对象
+    const A &q = a;             // 指向常对象的引用
+
+    // 指针
+    char greeting[] = "Hello";
+    char* p1 = greeting;                // 指针变量，指向字符数组变量
+    const char* p2 = greeting;          // 指针变量，指向字符数组常量（const 后面是 char，说明指向的字符（char）不可改变）
+    char* const p3 = greeting;          // 自身是常量的指针，指向字符数组变量（const 后面是 p3，说明 p3 指针自身不可改变）
+    const char* const p4 = greeting;    // 自身是常量的指针，指向字符数组常量
+}
+
+// 函数
+void function1(const int Var);           // 传递过来的参数在函数内不可变
+void function2(const char* Var);         // 参数指针所指内容为常量
+void function3(char* const Var);         // 参数指针为常量
+void function4(const int& Var);          // 引用参数在函数内为常量
+
+// 函数返回值
+const int function5();      // 返回一个常数
+const int* function6();     // 返回一个指向常量的指针变量，使用：const int *p = function6();
+int* const function7();     // 返回一个指向变量的常指针，使用：int* const p = function7();
+```
+
 </details>
 
 ### 9. 宏的相关概念
@@ -1649,6 +1836,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 避免了意义模糊的数字出现。
@@ -1662,6 +1850,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 首先，有几个概念:
@@ -1687,6 +1876,7 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 功能不同。
    typedef不是简单的替换，而是起一个类型的别名。
@@ -1699,22 +1889,32 @@ const是用来修饰常类型的类型修饰符，常类型的对象和变量的
 3. 执行阶段不同。
 #define是在预处理阶段进行处理的。
    typedef是在编译阶段进行处理的。
+    
+4. 对指针的操作不同:这里属于严重不同，要注意，虽然都是用pint 代替int * 但是，但是typedef 相当于是一个别名
+typedef int * pint;
+#define PINT int *
+ 
+int i1 = 1, i2 = 2;
+
+const pint p1 = &i1;	//p不可更改，p指向的内容可以更改，相当于 int * const p;
+const PINT p2 = &i2;	//p可以更改，p指向的内容不能更改，相当于 const int *p；或 int const *p；
 ```
 
 </details>
 
 ##### 9_4 do {...} while (0) 在宏定义中的作用
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 担心这样的宏->#define foo(x) bar(x); baz(x)
 这样的宏，如果没手动做一个do while循环，很可能最终的结果与我们期望的结果大相径庭。
 do能确保大括号里的逻辑能被执行，而while(0)能确保该逻辑只被执行一次，即与没有循环时一样。
 ```
+
 </details>
-
-
 
 
 ### 10. 谈一下对static的理解？
@@ -1723,6 +1923,7 @@ do能确保大括号里的逻辑能被执行，而while(0)能确保该逻辑只�
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 隐藏。所有未加static前缀的全局变量和函数都具有全局可见性。加了static，则将该全局变量或函数限制在该文件中，对其他文件不可见。
@@ -1737,6 +1938,7 @@ do能确保大括号里的逻辑能被执行，而while(0)能确保该逻辑只�
 <details>
 <summary>答案</summary>
 
+
 ```c
 1、被 static 修饰的变量属于类变量，可以通过类名.变量名直接引用，而不需要 new 出一个类来。
 
@@ -1749,6 +1951,7 @@ do能确保大括号里的逻辑能被执行，而while(0)能确保该逻辑只�
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 从类的加载机制的角度讲，静态资源时类初始化的时候加载的，而非静态资源时类实例化对象的时候加载的。
@@ -1773,6 +1976,7 @@ do能确保大括号里的逻辑能被执行，而while(0)能确保该逻辑只�
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 修饰局部变量
    const修饰的局部变量，其存储位置在栈上。但有个特例：const static修饰的局部变量是存储在只读存储区的。
@@ -1792,6 +1996,7 @@ static修饰的全局变量，依然存储在静态区，只是，作用域变�
 <details>
 <summary>答案</summary>
 
+
 ```c
 引用不在同一个文件中的变量或者函数。这样就不必特意包含某个文件。
     
@@ -1800,6 +2005,8 @@ static修饰的全局变量，依然存储在静态区，只是，作用域变�
 2. extern "C" 用于C++中，用于将C++的一些代码用C语言的方式编译。
     
 3. extern是声明变量，并不是定义，所以并不会分配空间。
+    
+4. 如果在一个文件中需要引用另一个文件中的外部变量，则用extern修饰这个外部变量。
 ```
 
 </details>
@@ -1808,6 +2015,7 @@ static修饰的全局变量，依然存储在静态区，只是，作用域变�
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -1836,47 +2044,59 @@ static修饰的全局变量，依然存储在静态区，只是，作用域变�
 <details>
 <summary>答案</summary>
 
+
 ```c
 a. IP最多2^32次方。直接存入内存hash。
 b. 将所有IP存入一个大文件中。使用%1000的方式。分成1000个小文件。然后对每个小文件进行hash映射。接下来，取每个小文件中出现次数最多的ip再进行一次hash就可以了。
 ```
+
 </details>
 
 2. 假设目前有一千万个记录（这些查询串的重复度比较高，虽然总数是1千万，但如果除去重复后，不超过3百万个。一个查询串的重复度越高，说明查询它的用户越多，也就是越热门。），请你统计最热门的10个查询串，要求使用的内存不能超过1G。
+
 <details>
 <summary>答案</summary>
+
 
 ```c
     a. 在O(N)的时间内对所有数据进行hash处理。去掉大部分重复的记录。
     b. 然后维护一个10个元素的大顶堆结构，时间复杂度为O(NLOGK).
 所以，总的时间复杂度为：O(N)+O(NLOGK).
 ```
+
 </details>
 
 3. 有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 a. 先将1G的大文件分解成5000个小文件。这样每个文件大约是200k。如果超过内存限制的话，继续分。
 b.然后可以采用hash 。
 ```
+
 </details>
 
 4. 在2.5亿个整数中找出不重复的整数，注，内存不足以容纳这2.5亿个整数。
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 a. 使用2 bit-map。（每个数分配两个bit，00表示不存在，01表示出现一次，10表示出现多次，11无意义）然后，扫描这2.5亿整数，查看其对应的位。
 b. 进行%1000. 可以分别存入1000个文件中。
 ```
+
 </details>
 
 #### 14.1Top(K)一般处理方式
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 1、直接全部排序（只适用于内存够的情况）
@@ -1918,6 +2138,7 @@ b. 进行%1000. 可以分别存入1000个文件中。
    <summary>答案</summary>
 
 
+
    ```c
 **算法思想：分而治之+hash**
 首先，将IP地址%1024。将这些ip地址分别放入1024个小文件中。这样每个小文件就包含有4MB个	IP地址，
@@ -1933,6 +2154,7 @@ b. 进行%1000. 可以分别存入1000个文件中。
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -1957,6 +2179,7 @@ b. 进行%1000. 可以分别存入1000个文件中。
 
 
 
+
    ```c
 位图法就是bitmap的缩写，所谓bitmap，就是用每一位来存放某种状态，适用于大规模数据，但数据状态又不是很多的情况。 通常是用来判断某个数据存不存在的。
 
@@ -1964,7 +2187,7 @@ b. 进行%1000. 可以分别存入1000个文件中。
    从最简单的情况说起，如果要对90个小于100的不重复的正整数排序。用位图的思想就是先申请一块100bit的空间，第一遍遍历所有的数，将出现的数字在位图中对应的位置置为1；第二遍遍历位图，依次输出值为1的位对应的数字。先且不说这种情况出现的频率不是很高，就仅这种情况，还是有很多其他的排序算法有它们自己的优势（不用额外占用空间之类）。但更进一步，如果我们把数字范围放大，对1000,000,000中的900,000,000个不重复的正整数排序，由于需要的内存非常大，其他算法在不分治的情况下就很难再处理这个问题。而用位图法只需要1000000000/(8*1024*104)=119.2MB空间，对现在的计算机来说没有任何问题。
 
 2. 海量数据去重
-   看一个比较常见的面试题：在2.5亿个整数中找出不重复的整数，内存不足以放下算有的数。我们可以采用两位的位图法，为每个数分配两位，00表示没有出现，01表示出现一次，10表示出现多次，11没有意义。这样下来总共需要232∗2=1232∗2=1GB(这里没有限定整数的范围，所有把所有32位整数都考虑进去)的内存。接下去扫描着2.5亿个整数，查看位图中相对应的位，如果是00就变为01，如果是01就变为10，其他情况保持不变。扫描完成后仍为01的整数就是需要查找的数。
+   看一个比较常见的面试题：在2.5亿个整数中找出不重复的整数，内存不足以放下所有的数。我们可以采用两位的位图法，为每个数分配两位，00表示没有出现，01表示出现一次，10表示出现多次，11没有意义。这样下来总共需要232∗2=1232∗2=1GB(这里没有限定整数的范围，所有把所有32位整数都考虑进去)的内存。接下去扫描着2.5亿个整数，查看位图中相对应的位，如果是00就变为01，如果是01就变为10，其他情况保持不变。扫描完成后仍为01的整数就是需要查找的数。
 
 **总结**
 Bitmap适用于数据规模大，但数据状态少的情况。同时Bitmap在存在以下一些不足：
@@ -1988,6 +2211,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
    <summary>答案</summary>
 
 
+
    ```c
 1. 首先，hashMap是一个保存（key,value）键值对的一个数据结构，每个键值对叫一个Entry。这些Entry分散存储在一个数组中，这个数组就是HashMap的主干。
 2. 新来的Entry节点若和原来的冲突的话，则使用头插法将其插入Entry主节点后。之所以使用头插法是因为发明者认为后面插入的节点更容易会被使用。
@@ -2002,6 +2226,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
    <details>
    <summary>区别</summary>
+
 
 
    ```c
@@ -2027,8 +2252,10 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
    > 名字，sizeof,使用，初始化，引用，const，多级
 
 #### 19.0 C++传参是传指针还是传引用?
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 传指针的好处
@@ -2046,12 +2273,14 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
 4. 传入的内容会被修改的，用指针。
 ```
+
 </details>
 
 #### 19.1 引用的底层原理
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -2076,6 +2305,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 <summary>答案</summary>
 
 
+
 ```c
 1. 传递引用，避免了一次实参到形参的拷贝。
 2. 程序员能够修改调用函数中的数据对象。
@@ -2090,6 +2320,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -2108,6 +2339,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 <summary>答案</summary>
 
 
+
 ```c
 1. 对于内建的数据类型，如小于4字节的的类型来讲，实际上传递时只需要传递1-4个字节。
 2. 从健壮性来讲，值传递是比指针传递要健壮的，因为指针传递随便什么指针都可以传入。只要是void*就可以符合要求。而值传递就会进行类型检查。
@@ -2124,6 +2356,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 <details>
 <summary>答案</summary>
 
+
 ```c
 1.  对于那些函数，它们只使用传递过来的值，而不对值进行修改。
 （1）如果数据对象很小，如内置数据类型或小型结构，使用按值传递。
@@ -2133,10 +2366,11 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
 2.   对于那些函数，它们需要修改传递过来的值。
 （1）如果数据对象是内置数据类型，则使用指针。
-（2）如果数据对象师叔祖，则只能使用指针。
+（2）如果数据对象是数祖，则只能使用指针。
 （3）如果数据对象是结构。则使用指针或者引用。
 （4）如果数据对象是类对象，则使用引用。
 ```
+
 </details>
 
 
@@ -2146,6 +2380,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
  <details>
 <summary>答案</summary>
+
 
 ```c
 完全二叉树是一种特殊的二叉树，满足以下要求：
@@ -2160,6 +2395,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
    **完全二叉树使用场景：**
    根据前面的学习，我们了解到完全二叉树的特点是：“叶子节点的位置比较规律”。因此在对数据进行排序或者查找时可以用到它，比如堆排序就使用了它，后面学到了再详细介绍。
 ```
+
 </details>
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210504181942832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
@@ -2168,6 +2404,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
   二叉树的提出其实主要就是为了提高查找效率，比如我们常用的 HashMap 在处理哈希冲突严重时，拉链过长导致查找效率降低，就引入了红黑树。
@@ -2182,6 +2419,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
    比如上图，中序遍历结果是：
    1 3 4 6 7 8 10 13 14
    ```
+
    </details>
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210504182238767.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
 
@@ -2190,6 +2428,7 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
    <details>
 <summary>答案</summary>
+
 
 ```c
    在最好的情况下，二叉排序树的查找效率比较高，是 O(logn)，其访问性能近似于折半查找；
@@ -2207,8 +2446,10 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
    因此就要用到平衡二叉树（AVL 树）了。
 
 #### 21.3平衡二叉树（二叉搜索树）
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 平衡二叉树提出的原因:
@@ -2230,15 +2471,17 @@ Bitmap申请空间时要根据最大的数来决定申请的空间大小，如�
 
 依次类推，平衡二叉树在添加和删除时需要进行旋转保持整个树的平衡，内部做了这么复杂的工作后，我们在使用它时，插入、查找的时间复杂度都是 O(logn)，性能已经相当好了。
 ```
+
 </details>
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210504182944237.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)   
   ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210504183003634.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
-   
+
 
 #### 21.4 avl树是什么结构，让我说一下怎么插入，插入后怎么旋转。
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 avl树是平衡二叉树。
@@ -2254,6 +2497,21 @@ bf = 右子树的个数-左子树的个数
 
    </details>
 
+#### 21. 5 哪两种遍历方式可以唯一确定一棵二叉树？
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1. 前序+中序
+2. 中序+后序
+
+这两种方式可以唯一确定一棵二叉树。
+```
+
+</details>
+
    
 
 ### 22. C语言中的strlen与sizeof的区别
@@ -2261,10 +2519,11 @@ bf = 右子树的个数-左子树的个数
    <details>
    <summary>答案</summary>
 
-   ```c
-sizeof与strlen是有着本质的区别，sizeof是求数据类型所占的空间大小,而strlen是求字符串的长度，字符串以/0结尾。
 
-sizeof的底层原理：sizeof是运算符，需要操作系统支持。
+   ```c
+1. sizeof与strlen是有着本质的区别，sizeof是求数据类型所占的空间大小,而strlen是求字符串的长度，字符串以/0结尾。
+
+2. sizeof的底层原理：sizeof是运算符，需要操作系统支持。
 #define sizeof(type) ((size_t) ((type*)0 + 1))
 #define array_sizeof(T)   ( (size_t)(&T+1)  - (size_t)(&T)  )
 上面这两句就是其底层原理。
@@ -2299,13 +2558,23 @@ int main()
 	cout<<"--->test sizeof4     "<<d1<<endl;
 	return 0;
 }
+
+3.  sizeof计算对象的大小
+(1)A的大小为4个字节，因为在大部分的情况下计算类的对象大小时只需要计算它的成员变量的大小就可以了，而不需要计算成员函数的大小。
+(2)B的大小为8个字节,因为B除了它本身的成员变量大小占4个字节之外，它还有一个虚函数，虚函数需要4个字节去存放虚函数表，所以B的大小为8个字节
+(3)C的大小为12字节，是因为它继承了类B，类B的大小为8个字节，再加上它自己的成员变量4个字节，所以有12个字节，注意C的大小不是16个字节，因为子类虽然拥有自己的虚函数，但是与父类共用一张虚表
+
    ```
+
    </details>
+
+[参考](https://blog.csdn.net/skyroben/article/details/53207795)
 
 ### 25. C++ 友元是什么
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -2324,12 +2593,14 @@ int main()
    </details>
 
 #### 29.1 排序算法集合
+
 排序稳定性的概念：排序前相等的两个元素的先后顺序，排序后，是否先后顺序依旧未改变。
 
    **1、冒泡排序：**
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 从数组中第一个数开始，依次遍历数组中的每一个数，通过相邻比较交换，每一轮循环下来找出剩余未排序数的中的最大数并“冒泡”至数列的顶端。
@@ -2342,6 +2613,7 @@ int main()
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 class Solution {
@@ -2375,6 +2647,7 @@ public:
    <summary>答案</summary>
 
 
+
    ```
 从待排序的n个记录中的第二个记录开始，依次与前面的记录比较并寻找插入的位置，每次外循环结束后，将当前的数插入到合适的位置。
 稳定性：稳定
@@ -2385,6 +2658,7 @@ public:
 
 <details>
 <summary>代码</summary>
+
 
 ```c
 class Solution {
@@ -2416,6 +2690,7 @@ class Solution {
    <summary>答案</summary>
 
 
+
    ```c
 希尔排序法是对相邻指定距离(称为增量)的元素进行比较，并不断把增量缩小至1，完成排序。
 希尔排序开始时增量较大，分组较多，每组的记录数目较少，故在各组内采用直接插入排序较快，后来增量di逐渐缩小，分组数减少，各组的记录数增多，但由于已经按di−1分组排序，文件叫接近于有序状态，所以新的一趟排序过程较快。因此希尔 排序在效率上比直接插入排序有较大的改进。
@@ -2433,6 +2708,7 @@ class Solution {
 
 <details>
 <summary>答案</summary>
+
 
  ```c
 public:	vector<int> sortArray(vector<int>& nums) {
@@ -2464,14 +2740,18 @@ public:	vector<int> sortArray(vector<int>& nums) {
    <details>
    <summary>答案</summary>
 
+
    ```c
 从所有记录中选出最小的一个数据元素与第一个位置的记录交换；然后在剩下的记录当中再找最小的与第二个位置的记录交换，循环到只剩下最后一个数据元素为止。
 稳定性：不稳定
 平均时间复杂度：O(n ^ 2)
    ```
+
    </details>
+
 <details>
 <summary>代码</summary>
+
 
 ```c
  //selectSort 每次将当前元素替换为后面最小的元素
@@ -2490,12 +2770,14 @@ public:	vector<int> sortArray(vector<int>& nums) {
         }
     }
 ```
+
 </details>
 
    **5、快速排序**
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 1）从待排序的n个记录中任意选取一个记录（通常选取第一个记录）为分区标准;
@@ -2504,9 +2786,12 @@ public:	vector<int> sortArray(vector<int>& nums) {
 稳定性：不稳定
 平均时间复杂度：O(nlogn)
    ```
+
    </details>
+
 <details>
 <summary>快速排序</summary>
+
 
 ```c
 //quickSort 每次选择一个元素并且将整个数组以这个元素分为两部分，小于该元素的放右边，大于该元素的放左边
@@ -2535,13 +2820,15 @@ public int partition(int[] arr,int l,int r){
   return l;
 }
 ```
+
 </details>
-   
+
 
    **6、堆排序：**
 
    <details>
    <summary>答案</summary>
+
 
 ```c
 堆：
@@ -2563,6 +2850,7 @@ public int partition(int[] arr,int l,int r){
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 > 1. 将无序序列构建成一个堆，根据升序需求选择大顶堆还是小顶堆。
@@ -2634,6 +2922,7 @@ int main()
    <details>
    <summary>答案</summary>
 
+
    ```c
 采用分治思想，现将序列分为一个个子序列，对子序列进行排序合并，直至整个序列有序。
 稳定性：稳定
@@ -2646,6 +2935,7 @@ int main()
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 class Solution {
@@ -2700,6 +2990,7 @@ public:
    <summary>答案</summary>
 
 
+
    ```c
 思想：如果比元素x小的元素个数有n个，则元素x排序后位置为n+1。
 步骤：
@@ -2718,6 +3009,7 @@ public:
    <details>
    <summary>答案</summary>
 
+
    ```c
 步骤：
 1）设置一个定量的数组当作空桶子； 常见的排序算法及其复杂度：
@@ -2731,6 +3023,7 @@ public:
 
    <details>
 <summary>桶排序</summary>
+
 
 ```c
 //radixSort 按位数进行排序，借助桶bucket进行分配与收集
@@ -2763,12 +3056,14 @@ public:
         }
     }
 ```
+
 </details>
 
 #### 29.1 快排(算一下快排复杂度，计算过程)
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 **快排的思想：**首先，快排是选出一个基准元素，一般选择第一个元素。然后，通过一趟排序，将数组分为两个部分，一部分比该元素小，一部分比该元素大。然后，再按此方法对这两部分分别进行递归。 
@@ -2780,6 +3075,7 @@ public:
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -2831,6 +3127,7 @@ int quick_sort(vector<int>& data, int left, int right)
    <details>
    <summary>答案</summary>
 
+
    ```c
 1. 选择基准的方式
    若每次划分都能划分成**等长的两个序列**，那么分治效率将会达到最大。下面介绍三种基准的选取方式
@@ -2850,18 +3147,26 @@ int quick_sort(vector<int>& data, int left, int right)
    </details>
 
    尾递归
+
    <details>
 <summary>答案</summary>
 
+
 ```c
-尾递归和一般的递归不同在对内存的占用，普通递归创建stack累积而后计算收缩，尾递归只会占用恒量的内存（和迭代一样）。
+1. 什么是尾递归?
+  如果一个函数中所有递归形式的调用都出现在函数的末端，我们称这个递归函数是尾递归。
+
+2. 尾递归和一般的递归不同在对内存的占用，普通递归创建stack累积而后计算收缩，尾递归只会占用恒量的内存（和迭代一样）。
 def recsum(x):
   if x == 1:
     return x
   else:
     return x + recsum(x - 1)
 尾调用的概念非常简单，一句话就能说清楚，就是指某个函数的最后一步是调用另一个函数。尾调用不一定出现在函数尾部，只要是最后一步操作即可。
+
+3. 尾递归函数的特点是在回归过程中不用做任何操作，这个特性很重要，因为大多数现代的编译器会利用这种特点自动生成优化的代码
 ```
+
 </details>
 
 
@@ -2869,6 +3174,7 @@ def recsum(x):
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -2887,6 +3193,7 @@ def recsum(x):
 
 <details>
 <summary>答案</summary>
+
 
  ```c
 #include <cstdio>
@@ -2931,9 +3238,12 @@ int main()
  ```
 
 </details>
+
 #### 29.3 sort采用的是什么排序？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 答案: 用到了快速排序还结合 了插入排序和堆排序。
@@ -2961,9 +3271,224 @@ sort算法逻辑: 数据量大时采用快排，分段归并排序。分段后�
  
  (5) 非递归的方式来实现快速排序或者去掉尾递归也是另外一种思路的优化
 ```
+
 </details>
 
-### 31. 二叉树后序中序遍历
+### 31. 二叉树的遍历(前序，中序，后序，递归+迭代 )
+
+#### 31.1 前序遍历
+
+##### 31_1_1. 前序遍历（递归）
+
+<details>
+<summary>答案</summary>
+
+
+
+```c
+class Solution {
+public:
+	 void traversal(TreeNode* cur, vector<int>& vec) {
+		 if (cur == NULL) 
+		 	return;
+		 vec.push_back(cur->val); // 中
+		 traversal(cur->left, vec); // 左
+		 traversal(cur->right, vec); // 右
+	 }
+	 vector<int> preorderTraversal(TreeNode* root) {
+		 vector<int> result;
+		 traversal(root, result);
+		 return result;
+	 }
+};
+```
+
+</details>
+
+
+
+##### 31_1_2.前序遍历(迭代）
+
+`code`
+
+<details>
+<summary>答案</summary>
+
+
+
+```c
+vector<int> preorder(TreeNode* root)
+{
+		vector<int> res;
+		if(root==NULL)
+			return res;
+		stack<TreeNode*> st;
+		st.push(root);
+		while(!st.empty())
+		{
+				TreeNode* node = st.top();
+				res.push(node);
+				st.pop();
+				if(node->right)
+					st.push(node->right);
+				if(node->left)
+					st.push(node.left);
+		}
+		return result;
+}
+```
+
+</details>
+
+#### 31.2 中序遍历
+
+##### 31_2_1. 中序遍历递归
+
+<details>
+<summary>递归</summary>
+
+
+```c
+class Solution {
+public:
+void traversal(TreeNode* cur, vector<int>& vec) {
+        if (cur == NULL) return;
+        traversal(cur->left, vec);  // 左
+        vec.push_back(cur->val);    // 中
+        traversal(cur->right, vec); // 右
+    }
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> result;
+        traversal(root, result);
+        return result;
+    }
+};
+```
+
+</details>
+
+##### 31_2_2.中序遍历迭代
+
+<details>
+<summary>答案</summary>
+
+
+```c
+/* 注意中序遍历的非递归是借助了栈的方式进行遍历的，并且，规则是:  先往左边走，走到最底下，最坐下没东西了，开始出栈的元素，然后，往右边走。*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> result;
+        stack<TreeNode*> st;
+        TreeNode* cur = root;
+        while(cur!=NULL||!st.empty())
+        {
+            if(cur!=NULL)//将入栈和出栈动作分开
+            {
+                st.push(cur);//这里才是第一次入栈，外面未入栈
+                cur = cur->left;//左
+            }
+            else//这个是出栈的动作
+            {
+                cur = st.top();
+                st.pop();
+                result.push_back(cur->val);//中
+                cur = cur->right;//右
+            }
+        }
+        return result;
+    }
+};
+```
+
+</details>
+
+#### 31.3 后序遍历
+
+##### 31.3.1 后序遍历递归
+
+<details>
+<summary>答案</summary>
+
+
+```c
+class Solution {
+public:
+    void traversal(TreeNode* cur, vector<int>& vec) {
+        if (cur == NULL) return;
+        traversal(cur->left, vec);  // 左
+        traversal(cur->right, vec); // 右
+        vec.push_back(cur->val);    // 中
+    }
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> result;
+        traversal(root, result);
+        return result;
+    }
+};
+
+```
+
+</details>
+
+##### 31.3.2 后序遍历迭代
+
+<details>
+<summary>答案</summary>
+
+
+```c
+/*如栈就按照头右左，刚好出来的顺序就是左右头。这样就是后序遍历的顺序了。*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(root==nullptr)
+            return res;
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty())
+        {
+            TreeNode* node = st.top();
+            res.push_back(node->val);
+            st.pop();
+            if(node->left)
+                st.push(node->left);
+            if(node->right)
+                st.push(node->right);
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
+```
+
+</details>
+
 
 ### 32. [红黑树](https://blog.csdn.net/tanrui519521/article/details/80980135)
 
@@ -2971,7 +3496,11 @@ sort算法逻辑: 数据量大时采用快排，分段归并排序。分段后�
    <summary>答案</summary>
 
 
+
    ```
+1)什么是红黑树?
+  它是一种特殊的二叉查找树，红黑树的每个节点都有存储位表示节点的颜色，可以是红(red)也可以是黑(black).
+
 其实平衡二叉树最大的作用就是查找,**AVL树的查找、插入和删除在平均和最坏情况下都是O(logn)**。AVL树的效率就是高在这个地方。如果在AVL树中插入或删除节点后，使得高度之差大于1。此时，AVL树的平衡状态就被破坏，它就不再是一棵二叉树；为了让它重新维持在一个平衡状态，就需要对其进行旋转处理, 那么创建一颗平衡二叉树的成本其实不小. 这个时候就有人开始思考，并且提出了红黑树的理论，那么红黑树到底比AVL树好在哪里？
    ```
 
@@ -2982,9 +3511,6 @@ sort算法逻辑: 数据量大时采用快排，分段归并排序。分段后�
 
    <details>
    <summary>答案</summary>
-
-
-
 
 
 
@@ -3004,10 +3530,6 @@ sort算法逻辑: 数据量大时采用快排，分段归并排序。分段后�
    <summary>答案</summary>
 
 
-
-
-
-
    ```
 红黑树是一棵二叉搜索树，它在每个节点增加了一个存储位，用来记录节点的颜色，可以是红色，也可以是黑色。通过任意一条从根到叶子简单路径上颜色的约束。红黑树可以保证最长路径不超过最短路径的两倍。近似平衡。
 具体性质如下：
@@ -3019,16 +3541,14 @@ sort算法逻辑: 数据量大时采用快排，分段归并排序。分段后�
 5. 对于每个节点，从该节点到其后代叶节点的简单路径上。均包含相同数目的黑色节点。这个属性很重要这个，保证了上面的最长路径不超过最短路径的两倍的这个特性。
    ```
 
-   </details>![在这里插入图片描述](https://img-blog.csdnimg.cn/2021052311035398.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
+   </details>
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/2021052311035398.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
 
 #### 32.3 红黑树查找速度。
 
    <details>
    <summary>答案</summary>
-
-
-
-
 
 
    ```
@@ -3043,10 +3563,6 @@ sort算法逻辑: 数据量大时采用快排，分段归并排序。分段后�
 
    <details>
    <summary>答案</summary>
-
-
-
-
 
 
    ```
@@ -3075,6 +3591,7 @@ RBTree有颜色约束性质，因此我们在插入新节点之后要进行颜�
    <summary>答案</summary>
 
 
+
    ```
 我们在MySQL中的数据一般是放在磁盘中的，读取数据的时候肯定会有访问磁盘的操作，磁盘中有两个机械运动的部分，分别是盘片旋转和磁臂移动。盘片旋转就是我们市面上所提到的多少转每分钟，而磁盘移动则是在盘片旋转到指定位置以后，移动磁臂后开始进行数据的读写。那么这就存在一个定位到磁盘中的块的过程，而定位是磁盘的存取中花费时间比较大的一块，毕竟机械运动花费的时候要远远大于电子运动的时间。当大规模数据存储到磁盘中的时候，显然定位是一个非常花费时间的过程，但是我们可以通过B树进行优化，提高磁盘读取时定位的效率。
 
@@ -3093,6 +3610,7 @@ B树是为了提高**磁盘或外部存储设备查找效率**而设计的一种
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -3131,6 +3649,7 @@ B树也称B-树,它是一颗多路平衡查找树。我们描述一颗B树时需
 
 
 
+
    ```
 a. B+树包含两种类型的节点：内部节点(索引节点)和叶子节点。根节点本身即可以是内部节点，也可以是叶子节点。根节点的关键字的个数最少可以只有一个。
 b. **B+树与B树的不同点在于内部节点不保存数据，只用于索引，所有数据都保存在叶子节点中。**
@@ -3147,6 +3666,7 @@ e.每个叶子结点都存有相邻叶子结点的指针，叶子结点本身依
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -3170,6 +3690,7 @@ e.每个叶子结点都存有相邻叶子结点的指针，叶子结点本身依
 
 
 
+
    ```
 1. B+树中只有叶子节点会带有指向记录的指针，而B树则所有节点都带有，在内部节点出现的索引项不会再出现在叶子节点中。
 2. B+树中所有叶子节点都是通过指针连接在一起，而B树不会。
@@ -3181,6 +3702,7 @@ e.每个叶子结点都存有相邻叶子结点的指针，叶子结点本身依
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -3207,6 +3729,7 @@ e.每个叶子结点都存有相邻叶子结点的指针，叶子结点本身依
 
 
 
+
    ```
 B树相对于红黑树的差别在大规模 数据存储的时候，红黑树往往由于**深度过大而造成磁盘IO读写过于频繁**，进而导致效率低下的情况。
 因为我们知道磁盘IO的代价主要花费在查找所需的柱面上，树的深度过大会造成磁盘IO频繁读写。所以，根据磁盘查找存取的次数往往由树的高度所决定，所以，只要我们通过某种较好的树结构减少树的高度，B树可以有多个子女，从几十到上千，降低树的高度
@@ -3226,6 +3749,7 @@ B树相对于红黑树的差别在大规模 数据存储的时候，红黑树往
 
 
 
+
    ```
 红黑树多用在内部排序，即全放在内存中的，STL的map和set的内部实现就是红黑树。
 B+树多用于外存上时，B+也被变成一个磁盘友好的数据结构。
@@ -3239,6 +3763,7 @@ B+树多用于外存上时，B+也被变成一个磁盘友好的数据结构。
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -3265,6 +3790,7 @@ n个节点的平衡二叉树的高度为H(即logn)，而n个节点的B/B+树的�
 
 
 
+
    ```
 1. **B+树的磁盘读写代价更低**:B+树的内部节点并没有指向关键字具体信息的指针，因此其内部节点相对B树更小，如果把所有同一内部节点的关键字存放在同一盘块中，那么盘块所能容纳的关键字数量也越多，一次性读入内存的需要查找的关键字也就越多，相对IO读写次数就降低了。
 2. **B+树的查询效率更加稳定**：由于非终结点并不是最终指向文件内容的结点，而只是叶子结点中关键字的索引。所以任何关键字的查找必须走一条从根结点到叶子结点的路。所有关键字查询的路径长度相同，导致每一个数据的查询效率相当。
@@ -3285,6 +3811,7 @@ n个节点的平衡二叉树的高度为H(即logn)，而n个节点的B/B+树的�
    <summary>答案</summary>
 
 
+
    ```
 1. C++的STL中，map与set都是用红黑树实现的。
 2. 著名的Linux进程调度Completely Fair Scheduler，用红黑树管理进程控制块，进程的虚拟内存区域都存储在一颗红黑树上，每个虚拟地址区域都对应红黑树的一个节点，左指针指向相邻的地址虚拟存储区域，右指针指向相邻的高地址虚拟地址空间；
@@ -3299,6 +3826,7 @@ n个节点的平衡二叉树的高度为H(即logn)，而n个节点的B/B+树的�
 
    <details>
    <summary>答案</summary>
+
 
 
    ```
@@ -3316,19 +3844,33 @@ n个节点的平衡二叉树的高度为H(即logn)，而n个节点的B/B+树的�
    <details>
    <summary>答案</summary>
 
+
    ```
 vector采用简单的**线性连续空间**。以两个迭代器start和end分别指向头尾，并以迭代器end_of_storage指向容量尾端。容量可能比(尾-头)还大，多余即备用空间。
    ```
+
    </details>
+
 #### 50.1. vector存储的元素为结构体时的注意事项
+
+<details>
+<summary>答案</summary>
+
+
+```c
 1. 结构体要是全局变量
 
 2. 结构体内部要重载比较运算符
-   
+```
+
+</details>
+
+
 ### 51. map与unordered_map优点和缺点
 
    <details>
    <summary>答案</summary>
+
 
    ```
 **对于map，其底层是基于红黑树实现的，优点如下：**
@@ -3357,6 +3899,7 @@ Unordered_map的查找、删除、添加的时间复杂度不稳定，平均为O
    <summary>答案</summary>
 
 
+
    ```
 1. 删除和插入操作较多的情况下，map比hash_map的性能更好，添加和删除的数据量越大越明显。
 2. map的遍历性能高于hash_map，而查找性能则相反，hash_map比map要好，数据量越大查找次数越多，表现就越好。
@@ -3372,6 +3915,7 @@ Unordered_map的查找、删除、添加的时间复杂度不稳定，平均为O
 
    <details>
    <summary>答案</summary>
+
 
    ```
 1. 注意，map中的元素要是有序的，如果只是单纯结构体的元素的话，那么程序是会出错的。
@@ -3392,11 +3936,12 @@ struct Info
    ```
 
    </details>
-  
+
 #### 52.2 hash与map的区别
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -3416,6 +3961,7 @@ struct Info
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -3448,6 +3994,7 @@ struct Info
 
 
 
+
    ```
 1. 平衡性：平衡性是指哈希的结果能够尽可能分布到所有的缓冲中去，这样可以使得所有的缓冲空间都得到利用。
 2. 单调性：单调性是指如果已经有一些内容通过哈希分派到了相应的缓冲中，又有新的缓冲加入到系统中。哈希的结果应能够保证原有已分配的内容可以被映射到原有的或者新的缓冲中去，而不会被映射到旧的缓冲集合中的其他缓冲区。
@@ -3469,12 +4016,14 @@ struct Info
 ### 53.1 如何用队列实现栈？
 
    其实就是两个队列就可以了。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210530212854522.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70]
 
 ### 54. Vector,ArrayList 与LinkedList 的区别
 
    <details>
    <summary>答案</summary>
+
 
 
    ```
@@ -3516,6 +4065,7 @@ Vector是基于synchronized实现的线程安全的ArrayList。
    <summary>答案</summary>
 
 
+
    ```
 C++函数重载底层实现原理是C++利用倾轧技术，来改名函数名，区分参数不同的同名函数。
 **函数倾轧**： 同名不同参函数（重载函数），C++底层如何区分他们，那就是对函数改名，也就是中文翻译的“倾轧”（苦涩难懂的词），改名也是有规律的，不是随便命名，具体参见下面：
@@ -3535,6 +4085,7 @@ C++函数重载底层实现原理是C++利用倾轧技术，来改名函数名�
    <summary>答案</summary>
 
 
+
    ```
 1. **编译器处理不同**宏定义是一个“编译时”概念，在预处理阶段展开，不能对宏定义进行调试，生命周期结束于编译时期。
    const变量是一个运行时概念，在程序运行时使用，类似于一个只读行数据。
@@ -3549,14 +4100,16 @@ C++函数重载底层实现原理是C++利用倾轧技术，来改名函数名�
 
    </details>
 
-### 60. [C++11的新特性](C++11的新特性)
+### 60. C++11的新特性
 
    <details>
    <summary>答案</summary>
 
+
    ```c
-1. **auto 关键字**：编译器可以根据初始值自动推导出类型。但是不能用于函数传参以及数组类型的推导。
-2. **decltype关键字**：选择并返回操作数的数据类型。在这，编译器只是分析表达式的数据类型，并不实际计算其表达式。`int func() {return 0};`   `decltype(func()) sum = 5;`
+1. **auto 关键字**：编译器可以根据初始值自动推导出类型。但是不能用于函数传参以及数组类型的推导。原理使用的是：模板实参推导机制。
+2. **decltype关键字**：选择并返回操作数的数据类型。在这，编译器只是分析表达式的数据类型，并不实际计算其表达式。使用在当你指向获取这个表达式的返回值，而不想计算这个表达式时使用。
+    int func() {return 0}; decltype(func()) sum = 5;
 3. **nullptr:**是一种特殊类型的字面值，它可以被转换成任意其他的指针类型。而NULL一般被宏定义为0，在遇到函数重载的时候可能会遇到问题。在C++11中，用nullptr替换了NULL.
 4. **智能指针**：C++11新增了std::shared_ptr,std::weaked_ptr等类型的智能指针，用于解决内存管理的问题。
    可变参数模板：对参数进行了高度泛化，可以表示任意数目、任意类型的参数，其语法为：在class或typename后面带上省略号”。
@@ -3565,9 +4118,12 @@ C++函数重载底层实现原理是C++利用倾轧技术，来改名函数名�
    ```
 
    </details>
-   ![在这里插入图片描述](https://img-blog.csdnimg.cn/ee8b7d99e75c4c5d99ff162f4322998a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
+![在这里插入图片描述](https://img-blog.csdnimg.cn/ee8b7d99e75c4c5d99ff162f4322998a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 6. **lambda表达式:**利用Lambda表达式，可以方便的定义和创建匿名函数。
@@ -3587,6 +4143,7 @@ C++函数重载底层实现原理是C++利用倾轧技术，来改名函数名�
       9. 可以将Lambda表达式认为是匿名内联函数。
 sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });
 ```
+
 </details>
 
    ![在这里插入图片描述](https://img-blog.csdnimg.cn/a9bd1252ccf246769973290a4defb05a.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
@@ -3598,6 +4155,7 @@ sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });
    <details>
    <summary>答案</summary>
 
+
    ```
 **说法一**：C++程序设计中使用堆内存是非常频繁的操作，堆内存的申请和释放都由程序员自己管理。程序员自己管理堆内存可以提高了程序的效率，但是整体来说堆内存的管理是麻烦的，C++11中引入了智能指针的概念，方便管理堆内存。使用普通指针，容易造成堆内存泄露（忘记释放），二次释放，程序发生异常时内存泄露等问题等，使用智能指针能更好的管理堆内存。**自动释放**
 **说法二**：智能指针的作用就是为了保证在使用堆上对象时，对象一定会被释放，但只能释放一次，并且释放后指向该对象的指针应该马上归0.
@@ -3605,11 +4163,12 @@ sort(lbvec.begin(), lbvec.end(), [](int a, int b) -> bool { return a < b; });
 
    </details>
 
-  
+
 ##### 60.1_2 智能指针的理解
 
    <details>
    <summary>答案</summary>
+
 
 
    ```C
@@ -3630,6 +4189,7 @@ Animal b = a;
 <summary>聊一聊RAII原理</summary>
 
 
+
 ```c
 RAII(Resource Acquisition Is Initialization):使用局部对象来管理资源的技术称为资源获取即初始化。
 
@@ -3644,10 +4204,11 @@ d. 使用时声明一个该对象的类。
 
 ##### 60.1_3 智能指针的使用
 
-   **auto_ptr**
+一、`auto_ptr`
 
    <details>
    <summary>答案</summary>
+
 
 
    ```
@@ -3662,43 +4223,61 @@ d. 使用时声明一个该对象的类。
 
    </details>
 
-  
-   **shared_ptr**
+二、`shared_ptr`
+
+1. 简要介绍
 
 <details>
-<summary>shared_ptr</summary>
+<summary>答案</summary>
+
 
 ```c
-   >shared_ptr多个指针指向相同的对象。shared_ptr使用引用计数，每一个shared_ptr的拷贝都指向相同的内存。每使用他一次，内部的引用计数加1，每析构一次，内部的引用计数减1，减为0时，自动删除所指向的堆内存。shared_ptr内部的引用计数是线程安全的，但是对象的读取需要加锁。
+1. shared_ptr多个指针指向相同的对象。shared_ptr使用引用计数，每一个shared_ptr的拷贝都指向相同的内存。每使用他一次，内部的引用计数加1，每析构一次，内部的引用计数减1，减为0时，自动删除所指向的堆内存。shared_ptr内部的引用计数是线程安全的，但是对象的读取需要加锁。
 
-   >std::shared_ptr确定最后一个引用它的对象何时被释放的基本想法是：对被管理的资源进行引用计数，当一个shared_ptr对象要共享这个资源的时候，该资源的引用计数加1，当这个对象生命期结束的时候，再把该引用技术减少1。这样当最后一个引用它的对象被释放的时候，资源的引用计数减少到0，此时释放该资源。
+2. std::shared_ptr确定最后一个引用它的对象何时被释放的基本想法是：对被管理的资源进行引用计数，当一个shared_ptr对象要共享这个资源的时候，该资源的引用计数加1，当这个对象生命期结束的时候，再把该引用技术减少1。这样当最后一个引用它的对象被释放的时候，资源的引用计数减少到0，此时释放该资源。
+
+3. 初始化。智能指针是个模板类，可以指定类型，传入指针通过构造函数初始化。也可以使用make_shared函数初始化。不能将指针直接赋值给一个智能指针，一个是类，一个是指针。例如std::shared_ptr<int> p4 = new int(1);的写法是错误的。
+
+4. 拷贝和赋值。拷贝使得对象的引用计数增加1，赋值使得原对象引用计数减1，当计数为0时，自动释放内存。后来指向的对象引用计数加1，指向后来的对象。
+
+5. get函数获取原始指针。注意不要用一个原始指针初始化多个shared_ptr，否则会造成二次释放同一内存，注意避免循环引用，shared_ptr的一个最大的陷阱是循环引用，循环，循环引用会导致堆内存无法正确释放，导致内存泄漏。循环引用在weak_ptr中介绍。
 ```
+
 </details>
 
 
+2. shared_ptr的初始化
 
-   <details>
-   <summary>答案</summary>
+<details>
+<summary>答案</summary>
 
 
-   ```
-初始化。智能指针是个模板类，可以指定类型，传入指针通过构造函数初始化。也可以使用make_shared函数初始化。不能将指针直接赋值给一个智能指针，一个是类，一个是指针。例如std::shared_ptr<int> p4 = new int(1);的写法是错误的
-拷贝和赋值。拷贝使得对象的引用计数增加1，赋值使得原对象引用计数减1，当计数为0时，自动释放内存。后来指向的对象引用计数加1，指向后来的对象。
-get函数获取原始指针
-注意不要用一个原始指针初始化多个shared_ptr，否则会造成二次释放同一内存
-注意避免循环引用，shared_ptr的一个最大的陷阱是循环引用，循环，循环引用会导致堆内存无法正确释放，导致内存泄漏。循环引用在weak_ptr中介绍。
-   ```
+```c
+//初始化方式1
+std::shared_ptr<int> sp1(new int(123));
+ 
+//初始化方式2
+std::shared_ptr<int> sp2;
+sp2.reset(new int(123));
+ 
+//初始化方式3
+std::shared_ptr<int> sp3;
+sp3 = std::make_shared<int>(123);
+```
 
-   </details>
+</details>
 
-  
-   **weak_ptr**
+三、`weak_ptr`
 
-   <details>
-   <summary>答案</summary>
-   ```
 为了解决shared_ptr相互引用的问题，导致资源无法释放的问题。
+
 1. weak_ptr的特点：
+
+<details>
+<summary>答案</summary>
+
+
+```c
 1) 一个对象被多个shared_ptr类所指向时，就会拥有多个引用计数,但是当weak_ptr指向一个shared_ptr类所指向的对象时，该对象的引用计数不会增加.
 
 2) 因此，当最后一个对象的最后一个shared_ptr类被释放时，该对象会被释放。即使此时仍有weak_ptr指向该对象，该对象的内存仍然会被释放
@@ -3711,27 +4290,48 @@ get函数获取原始指针
 5）weak_ptr接受shared_ptr类型的变量赋值，但是反过来是行不通的，需要使用lock函数。
 
 6) 由于不知道什么之后weak_ptr所指向的对象就会被析构掉，所以使用之前请先使用expired函数检测一下。
-2. 如何使用weak_ptr
-	我们需要使用一个shared_ptr类来初始化weak_ptr类
+```
 
+</details>
+
+
+2. 如何使用weak_ptr
+
+我们需要使用一个shared_ptr类来初始化weak_ptr类
+
+<details>
+<summary>答案</summary>
+
+
+```c
 auto p=make_shared<int>(42);  //初始化一个shared_ptr对象
 weak_ptr<int> wp(p); //用p初始化wp，wp弱共享p
 //wp只是指向p所指的对象，p的引用计数没有改变，并且p所指对象的释放也与wp无关
+```
+
+</details>
+
+​       
 
 3. weak_ptr的源码实现
+
 <details>
 <summary>weak_ptr的源码实现</summary>
+
 
 ```c
 
 ```
+
 </details>
 
-   ```
-   </details>
+[参考](https://blog.csdn.net/dong_beijing/article/details/79504591)
+
+4.  解决循环引用的示例
 
 <details>
-<summary>解决循环引用的示例</summary>
+<summary>答案</summary>
+
 
 ```c
 #include <iostream>
@@ -3782,9 +4382,12 @@ int main()
 </details>
 
    [weak_ptr的博客](https://blog.csdn.net/qq_42418668/article/details/99618245)
-   **unique_ptr**
+
+四、`unique_ptr`
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 强调一个资源只能被一个智能指针所引用。
@@ -3812,13 +4415,233 @@ private:
 unique_ptr的声明包含两个模板参数，第一个参数_Tp显然就是原生指针的类型。第二个模板参数_Dp是一个deleter(deleter其实就是一个自定义的匿名函数)
 
 ```
+
 </details>
-   
+
+五、`shared_ptr和weak_ptr的使用`
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1. couter的计数器类
+
+class Counter
+{
+public:
+   Counter():sCount(0),wCount(0){};
+   int sCount;//s
+   int wCount;
+}
+
+
+2. 简单实现以下shared_ptr
+
+template<class T> class WeakPtr;//为了用weak_ptr的lock ()，来生成shared_ptr用
+
+template<class T>
+class SharedPtr
+{
+public:
+        SharePtr(T* p=0)
+        :_ptr(p){
+            cnt=new Counter();
+            if(p)
+	       cnt->s=1;
+            cout<<"in construct "<<cnt->s<<endl;
+        }
+        ~SharePtr()
+        {
+            release();
+        }
+ 
+        SharePtr(SharePtr<T> const &s)
+        {
+            cout<<"in copy con"<<endl;
+            _ptr=s._ptr;
+			(s.cnt)->s++;
+            cout<<"copy construct"<<(s.cnt)->s<<endl;
+            cnt=s.cnt;
+        }
+	SharePtr(WeakPtr<T> const &w)//为了用weak_ptr的lock()，来生成share_ptr用，需要拷贝构造用
+	{
+		cout<<"in w copy con "<<endl;
+		_ptr=w._ptr;
+		(w.cnt)->s++;
+                cout<<"copy w  construct"<<(w.cnt)->s<<endl;
+		cnt=w.cnt;
+	}
+        SharePtr<T>& operator=(SharePtr<T> &s)
+        {
+            if(this != &s)
+            {
+                release();
+                (s.cnt)->s++;
+                cout<<"assign construct "<<(s.cnt)->s<<endl;
+                cnt=s.cnt;
+                _ptr=s._ptr;
+            }
+            return *this;
+        }
+        T& operator *()
+        {
+            return *_ptr;
+        }
+        T* operator ->()
+        {
+            return _ptr;
+        }
+	friend class WeakPtr<T>; //方便weak_ptr与share_ptr设置引用计数和赋值。
+    private:
+        void release()
+        {
+            cnt->s--;
+            cout<<"release "<<cnt->s<<endl;
+            if(cnt->s <1)
+            {
+               delete _ptr;
+	       if(cnt->w <1)
+	       {
+			delete cnt;
+			cnt=NULL;
+		}
+	     }
+        }
+        T* _ptr;
+        Counter* cnt;
+}
+
+
+3. weak_ptr的实现
+template<class T>
+class WeakPtr
+{
+public:
+   //默认构造函数
+   WeakPtr()
+   {
+      _ptr = 0;
+      cnt = 0;
+   }
+
+   //拷贝构造函数
+
+   WeakPtr(SharedPtr<T> &s):_ptr(s.ptr),cnt(s.cnt)
+   {
+      cout<<"w con s"<<endl;
+      cnt->w++;
+   }
+
+   WeakPtr(WeakPtr<T> & w):_ptr(w.ptr),cnt(w.cnt)
+   {
+      cnt->w++;
+   }
+
+   ~WeakPtr()
+   {
+      release();
+   }
+
+   //赋值构造函数
+   WeakPtr<T> &operator=(WeakPtr<T> &w)
+   {
+      if(this!=&w)
+      {
+         release();
+         cnt = w.cnt;
+         cnt->w++;
+         _ptr = w.ptr;
+      }
+      return *this;
+   }
+
+   WeakPtr<T> &operator=(SharedPtr<T> &s)
+   {
+      cout<<"w=s"<<endl;
+      release();
+      cnt = s.cnt;
+      cnt->w++;
+      _ptr = s._ptr;
+      return *this;
+   }
+
+
+   SharedPtr<T> lock()
+   {
+      return SharedPtr<T>(*this);
+   }
+
+   bool expired()
+   {
+      if(cnt)
+      {
+         if(cnt->s>0)
+         {
+            cout<<"empty"<<cnt->s<<endl;
+            return false;
+         }
+
+      }
+      return true;
+   }
+
+   friend class SharedPtr<T>;
+private:
+   void release()
+   {
+      if(cnt)
+      {
+         cnt->w--;
+         cout<<"weakptr release"<<cnt->w<<endl;
+         if(cnt->w<1&&cnt->s<1)
+         {
+            cnt = NULL;
+         }
+      }
+
+   }
+   T *_ptr;
+   Counter* cnt;
+}
+
+
+
+4. 测试代码如下:
+class parent;
+class child;
+class parent
+{
+    public:
+       // SharePtr<child> ch;
+       WeakPtr<child> ch;
+};
+class child
+{
+    public:
+        SharePtr<parent> pt;
+};
+int main()
+{
+    //SharePtr<parent> ft(new parent());
+    //SharePtr<child> son(new child());
+    //ft->ch=son;
+    //son->pt=ft;
+	//SharePtr<child> son2=(ft->ch).lock();
+	SharePtr<int> i;
+	WeakPtr<int> wi(i);
+	cout<<wi.expired()<<endl;
+	return 0;
+}
+```
+
+</details>
 
 ##### 60.1_4 智能指针存在相互引用的问题，如何解决?
 
    <details>
    <summary>答案</summary>
+
 
 
    ```
@@ -3837,6 +4660,7 @@ unique_ptr的声明包含两个模板参数，第一个参数_Tp显然就是原�
    <details>
    <summary>答案</summary>
 
+
    ```
 本质是存放在栈的模板对象，只是在栈内部包了一层指针。而栈在其声明周期结束的时候，其中的指针指向的堆内存也自然被释放了。
    ```
@@ -3848,6 +4672,7 @@ unique_ptr的声明包含两个模板参数，第一个参数_Tp显然就是原�
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. shared_ptr提供的转型函数: 
@@ -3862,20 +4687,15 @@ qSharedPointerDynamicCast
 qSharedPointerConstCast
 qWeakPointerCast
 ```
+
 </details>
 
-
-##### 参考
-
-      1. [C++ STL 四种智能指针](https://blog.csdn.net/K346K346/article/details/81478223)
+[C++ STL 四种智能指针](https://blog.csdn.net/K346K346/article/details/81478223)
 
 ### 61. c++源文件从文本到可执行文件经历的过程(gcc编译的过程)
 
    <details>
    <summary>答案</summary>
-
-
-
 
 
 
@@ -3913,24 +4733,22 @@ qWeakPointerCast
    <summary>答案</summary>
 
 
-
-
-
-
    ```
-Malloc函数用于动态分配内存。为了减少内存碎片和系统调用的开销，malloc采用内存池的方式。先申请大块内存作为堆区，然后将堆区分为多个内存块，以块作为内存管理的基本单位。当用户申请内存时，直接从堆区分配一块合适的空闲块。
+1. malloc 实现方案说法一：Malloc函数用于动态分配内存。为了减少内存碎片和系统调用的开销，malloc采用内存池的方式。先申请大块内存作为堆区，然后将堆区分为多个内存块，以块作为内存管理的基本单位。当用户申请内存时，直接从堆区分配一块合适的空闲块。
 并且，Malloc采用隐式链表结构将堆区分成连续的，大小不一的块，包含已分配块和未分配块。用显式链表结构来管理所有的空闲块，即使用一个双向链表将空闲块连接起来。每一个空闲块记录了一个连续的，未分配的地址。
 Malloc在申请内存时，一般会通过brk或者mmap系统调用进行申请。其中当申请内存小于128K时，会使用系统函数brk在堆区中分配；而当申请内存大于128K时，会使用系统函数mmap在映射区分配。
+
+2. malloc实现方案说法二：malloc 函数的实质是它有一个将可用的内存块连接为一个长长的列表的所谓空闲链表。 调用 malloc（）函数时，它沿着连接表寻找一个大到足以满足用户请求所需要的内存块。 然后，将该内存块一分为二（一块的大小与用户申请的大小相等，另一块的大小就是剩下来的字节）。 接下来，将分配给用户的那块内存存储区域传给用户，并将剩下的那块（如果有的话）返回到连接表上。 调用 free 函数时，它将用户释放的内存块连接到空闲链表上。 到最后，空闲链会被切成很多的小内存片段，如果这时用户申请一个大的内存片段， 那么空闲链表上可能没有可以满足用户要求的片段了。于是，malloc（）函数请求延时，并开始在空闲链表上检查各内存片段，对它们进行内存整理，将相邻的小空闲块合并成较大的内存块。
+
    ```
 
    </details>
-
-   
 
 ####  62.1 new和malloc的区别
 
 <details>
 <summary>答案</summary>
+
 
 ```c
       1. **申请的内存的区域是不同的。**
@@ -3977,6 +4795,10 @@ int * ptr = (int *) malloc( sizeof(int) );//分配一个10个int元素的数组
    `namespace std{    new_handler set_new_handler(new_handler p ) throw();}`
 set_new_handler的参数为new_handler指针，指向了operator new 无法分配足够内存时该调用的函数。其返回值也是个指针，指向set_new_handler被调用前正在执行（但马上就要发生替换）的那个new_handler函数。
    对于malloc，客户并不能够去编程决定内存不足以分配时要干什么事，只能看着malloc返回NULL。
+       11. new所做的三大步骤：
+       1)调用operator new函数分配一块足够大的，原始的空间
+	   2)编译器运行相应的构造函数以构造对象，并传入初值
+	   3) 构造完对象后，就返回一个指向该对象的指针。
 ```
 
 </details>
@@ -3985,6 +4807,7 @@ set_new_handler的参数为new_handler指针，指向了operator new 无法分�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
    创建新对象时,new做了两件事：底层调用malloc函数分配内存、	调用构造函数。
@@ -4002,6 +4825,7 @@ set_new_handler的参数为new_handler指针，指向了operator new 无法分�
    <details>
    <summary>答案</summary>
 
+
    ```c
 1. new简单类型直接调用operator new分配内存.而对于复杂结构，先调用operator new分配内存，然后在分配的内存上调用构造函数；
 2. 对于简单类型，new[]计算好大小后调用operator new；对于复杂数据结构，new[]先调用operator new[]分配内存，然后在p的前四个字节写入数组大小n，然后调用n次构造函数，针对复杂类型，new[]会额外存储数组大小；
@@ -4015,10 +4839,11 @@ set_new_handler的参数为new_handler指针，指向了operator new 无法分�
 <summary>答案</summary>
 
 
+
 ```c
-      1. new表达式调用一个名为operator  new(operator new[])函数，分配一块足够大的、原始的、未命名的内存空间；
-      2. 编译器运行相应的构造函数以构造这些对象，并为其传入初始值；
-      3. 对象被分配了空间并构造完成，返回一个指向该对象的指针。
+1. new表达式调用一个名为operator  new(operator new[])函数，分配一块足够大的、原始的、未命名的内存空间；
+2. 编译器运行相应的构造函数以构造这些对象，并为其传入初始值；
+3. 对象被分配了空间并构造完成，返回一个指向该对象的指针。
 ```
 
 </details>
@@ -4027,6 +4852,7 @@ set_new_handler的参数为new_handler指针，指向了operator new 无法分�
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -4040,6 +4866,7 @@ delete简单数据类型默认只是调用free函数；复杂数据类型先调�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 需要在 new [] 一个对象数组时，需要保存数组的维度，C++ 的做法是在分配数组空间时多分配了 4 个字节的大小，专门保存数组的大小，在 delete [] 时就可以取出这个保存的数，就知道了需要调用析构函数多少次了。
@@ -4061,6 +4888,7 @@ malloc 返回给用户态的内存起始地址比进程的堆空间起始地址�
 
 
 
+
    ```c
 1. 无论Malloc使用brk还是mmap分配内存，分配到的都是虚拟内存。而且还是虚拟内存的页号，只是代表当前页是可以使用的而已。
   2. 动态内存申请的一些规则:
@@ -4071,12 +4899,17 @@ malloc 返回给用户态的内存起始地址比进程的堆空间起始地址�
 
    </details>
 
+##### 62.2_3 **被free回收的内存是立即返还给操作系统吗？**
 
+这个需要看具体的源码。
+
+一般来说，回收的内存会首先被ptmalloc使用双链表保存起来，当用户下次申请的时候，会尝试从这些内存中寻找合适的返回。这样就避免了频繁的系统调用，占用过多的系统资源。同时ptmalloc也会尝试对小块内存进行合并，避免过多的内存碎片。
 
 #### 62.3 mmap了解过吗？
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -4120,6 +4953,7 @@ mmap是一种内存映射文件的方法，即将一个文件或其他对象映�
    <details>
    <summary>答案</summary>
 
+
    ```c
 1. 无论如何继承，指针如何指向，构造函数都以最终实例化为准，顺序始终是先父类后子类
   2. 析构函数遵从类的多态性，非虚析构函数则以指针类型为准，虚析构函数则以最终实例为准，存在继承关系时顺序是先子类后父类
@@ -4137,9 +4971,15 @@ mmap是一种内存映射文件的方法，即将一个文件或其他对象映�
    <details>
    <summary>答案</summary>
 
+
    ```c
   1. C++类有继承时，析构函数必须为虚函数。如果不是虚函数，则使用时可能存在内在泄漏的问题。若析构函数是虚函数(即加上virtual关键词)，delete时基类和子类都会被释放；
      若析构函数不是虚函数(即不加virtual关键词)，delete时只释放基类，不释放子类；
+
+  2. 构造函数不能声明为virtual ,无法正确创造对象。原因有两点：第一：调用构造函数创建对象时，必须要知道具体的对象类型，而虚函数的特性就是在运行时才你那个确定具体的对象类型。
+第二：构造函数为虚函数的话，在调用构造函数的时候，虚函数表还未初始化。
+
+  3. 补充：虚函数表的创建时机: 虚函数表创建时机是在编译期间。编译期间编译器就为每个类确定好了对应的虚函数表里的内容。所以在程序运行时，编译器会把虚函数表的首地址赋值给虚函数表指针，所以，这个虚函数表指针就有值了.
    ```
 
    </details>
@@ -4148,6 +4988,7 @@ mmap是一种内存映射文件的方法，即将一个文件或其他对象映�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 C++的空类有哪些成员函数：
@@ -4164,6 +5005,7 @@ C++的空类有哪些成员函数：
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -4204,6 +5046,7 @@ void main()
 
    <details>
    <summary>答案</summary>
+
 
    ```c
   1.C++标准指出，不允许一个对象（当然包括类对象）的大小为0，不同的对象不能具有相同的地址。这是由于：
@@ -4263,6 +5106,7 @@ class HoldsAnInt {
    <details>
    <summary>答案</summary>
 
+
    ```c
  C++11之前，对象的拷贝控制由三个函数决定：拷贝构造，拷贝赋值，析构函数。
    C++11之后，增加了两个移动构造函数，移动赋值函数。
@@ -4279,6 +5123,7 @@ class HoldsAnInt {
    <summary>答案</summary>
 
 
+
    ```c
    C++默认的拷贝构造函数和赋值构造函数都是浅拷贝，所以当遇到类成员中有指针变量时，就得自己实现深拷贝。
    **什么情况必须使用拷贝构造？**
@@ -4292,6 +5137,7 @@ class HoldsAnInt {
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -4359,6 +5205,7 @@ String & String::operate=(const String&other)//赋值函数
    <summary>答案</summary>
 
 
+
    ```c
 拷贝构造函数必须以引用的方式传递参数。这是因为，在值传递的方式传递给一个函数的时候，会调用拷贝构造函数生成函数的实参。如果拷贝构造函数的参数仍然是以值的方式，就会无限循环的调用下去，直到函数的栈溢出。
    ```
@@ -4372,7 +5219,9 @@ String & String::operate=(const String&other)//赋值函数
 <details>
 <summary>答案</summary>
 
+
 ```c
+0. 左值是一般指表达式结束后依然存在的持久化对象，右值指表达式结束时就不再存在的临时对象。
 1. 能出现在赋值号左边的表达式称为“左值”，不能出现在赋值号左边的表达式称为“右值”。一般来说，左值是可以取地址的，右值则不可以。
 非 const 的变量都是左值。函数调用的返回值若不是引用，则该函数调用就是右值。一般的“引用”都是引用变量的，而变量是左值，因此它们都是“左值引用”。
 C++11 新增了一种引用，可以引用右值，因而称为“右值引用”。无名的临时变量不能出现在赋值号左边，因而是右值。右值引用就可以引用无名的临时变量。定义右值引用的格式如下：
@@ -4399,16 +5248,20 @@ C++11 新增了一种引用，可以引用右值，因而称为“右值引用�
 
 
 ```
+
 </details>
+
 ### 67. STL的基本组件
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2021061417482461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
 
 deque是唯一一个“在迭代器失效时不会使它的指针和引用失效”的标准STL容器
+
 #### 67.1 一个空类占用的内存大小是多少？
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -4424,6 +5277,7 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
 
    <details>
    <summary>答案</summary>
+
 
 
 
@@ -4449,6 +5303,7 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
    <summary>答案</summary>
 
 
+
    ```c
  内存模型所要表达的内容主要是这么描述： 一个内存操作的效果，在其他线程中的可见性问题。我们知道，对计算机来说，通常内存的写操作相对于读操作是昂贵很多很多的，因此对写操作的优化是提升性能的关键，而这些对写操作的种种优化，导致了一个很普遍的现象出现：写操作通常会在 CPU 内部的 cache 中缓存起来。这就导致了在一个 CPU 里执行一个写操作之后，该操作导致的内存变化却不一定会马上就被另一个 CPU 所看到。
    ```
@@ -4456,8 +5311,10 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
    </details>
 
 #### 69.1 内存的分配方式
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1)从静态存储区域分配。内存在程序编译的时候就已经分配好，这块内存在程序的整个运行期间都存在。例如全局变量。
@@ -4466,6 +5323,7 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
 
 3)从堆上分配，亦称动态内存分配。程序在运行的时候用malloc或new申请任意多少的内存，程序员自己负责在何时用free或delete释放内存。动态内存的生存期由我们决定，使用非常灵活，但问题也最多。
 ```
+
 </details>
 
 
@@ -4473,6 +5331,7 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -4494,6 +5353,7 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -4531,6 +5391,7 @@ deque是唯一一个“在迭代器失效时不会使它的指针和引用失效
 
 
 
+
    ```c
 void dfs(int x,int y)
 {	
@@ -4554,40 +5415,50 @@ void dfs(int x,int y)
    <details>
    <summary>答案</summary>
 
+
    ```c
  BFS是从根节点开始，沿着树(图)的宽度遍历树(图)的节点。
    如果所有节点均被访问，则算法中止。
    BFS同样属于盲目搜索。
    一般用队列数据结构来辅助实现BFS算法。
    ```
+
    </details>
 
 ### 76 IO多路复用的相关知识？
 
 #### 76.1 什么是IO多路复用？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 IO多路复用是一种同步文件描述符，实现在一个线程中监控多个文件描述符，一旦某个文件句柄就绪就能够去通知相应的应用程序进行读写操作，没有文件句柄就绪时就会阻塞应用程序，交出CPU。
 ```
+
 </details>
 
 
 #### 76.2 说出你所知道的IO多路复用模型，并解释为什么IO多路复用效率高？
+
    <details>
    <summary>答案</summary>
+
 
    ```c
 select，poll,epoll都是IO多路复用的一种机制，就是通过一种机制可以监控多个文件描述符，一旦某个文件描述符就绪，就能够通知进程进行相应的读写操作。
 效率高的原因：
 也就是使用了IO多路复用之后，一个线程可以监控多个文件描述符，减少了线程的切换消耗以及CPU轮询损耗。
    ```
+
    </details>
 
 #### 76.3 请你详细聊聊select？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. select的本质: 
@@ -4602,11 +5473,14 @@ select，poll,epoll都是IO多路复用的一种机制，就是通过一种机�
 select会循环遍历它所监测的fd_set内的所有文件描述符对应的驱动程序的poll函数。
 驱动程序提供的poll函数首先会将调用select的用户进程插入到该设备驱动对应资源的等待队列(如读/写等待队列)，然后返回一个bitmask告诉select当前资源哪些可用。
 ```
+
 </details>
 
 #### 76.4 请你详细聊聊poll？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 poll的本质：
@@ -4619,12 +5493,15 @@ poll的缺点：
 1）大量的fd会被整体复制于用户态和内核地址空间之间，存在大量的性能损耗。
 2）poll还有一个特点是 水平触发 。若报告了之后，该fd没有被处理。那么下次再次报告的时候，会再通知这个fd。（水平触发的含义是只要处于水平状态就会一直触发）
 ```
+
 </details>
 
 
 #### 76.4 请你详细聊聊epoll？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. epoll的本质：
@@ -4665,12 +5542,15 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 3). map的实现只在查找，插入，删除方面做了折中。
 
 ```
+
 </details>
 
 
 #### 76.5 select和epoll区别?它们算同步还是异步io，同步异步区别在哪里?
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1) 通知机制
@@ -4681,6 +5561,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 
 3) 同步io需要在读写事件就绪后，自己负责读写，而异步IO无需进行读写，它只负责发起事件具体的实现由别的完成。
 ```
+
 </details>
 
 
@@ -4690,12 +5571,14 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/a0796bf5e71d434caf0059476440a25d.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzMjExMDYw,size_16,color_FFFFFF,t_70)
 [参考](https://blog.csdn.net/Jailman/article/details/78498193)
+
 ### 78. HashMap的面试题。
 
 #### 78.1 如何自己实现一个Hash?
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 用一个数组加一个链表。其实，数组本身就可以作为一个hash表，下标作为key ，value就是数组的值。HashMap采用Entry数组来存储key-value对，每一个键值对组成了一个Entry实体，Entry类实际上是一个单向的链表结构，它具有Next指针，可以连接下一个Entry实体。 只是在JDK1.8中，链表长度大于8的时候，链表会转成红黑树！ 为什么用数组+链表？ 数组是用来确定桶的位置，利用元素的key的hash值对数组长度取模得到. 链表是用来解决hash冲突问题，当出现hash值一样的情形，就在数组上的对应位置形成一条链表。
@@ -4719,6 +5602,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
    <details>
    <summary>答案</summary>
 
+
    ```c
 1）线性探测
 按顺序决定值时，如果某数据的值已经存在，则在原来值的基础上往后加一个单位，直至不发生哈希冲突。　
@@ -4734,6 +5618,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 
    <details>
    <summary>答案</summary>
+
 
 
    ```c
@@ -4754,6 +5639,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
    <details>
    <summary>答案</summary>
 
+
    ```c
  对于冲突的哈希值再次进行哈希处理，直至没有哈希冲突。
    ```
@@ -4767,15 +5653,18 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
    <details>
    <summary>答案</summary>
 
+
    ```c
 建立公共溢出区存储所有哈希冲突的数据。
    ```
+
    </details>
 
 #### 78.4 为什么HashMap不用LinkedList,而选用数组?
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 因为用数组效率最高！ 在HashMap中，定位桶的位置是利用元素的key的哈希值对数组长度取模得到。此时，我们已得到桶的位置。显然数组的查找效率比LinkedList大。
@@ -4788,6 +5677,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
    <details>
    <summary>答案</summary>
 
+
    ```c
 因为采用基本数组结构，扩容机制可以自己定义，HashMap中数组扩容刚好是2的次幂，在做取模运算的效率高。 而ArrayList的扩容机制是1.5倍扩容，那ArrayList为什么是1.5倍扩容这就不在本文说明了。
    ```
@@ -4799,8 +5689,9 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
    <details>
    <summary>答案</summary>
 
+
    ```c
-因为红黑树需要进行左旋，右旋，变色这些操作来保持平衡，而单链表不需要。 当元素小于8个当时候，此时做查询操作，链表结构已经能保证查询性能。当元素大于8个的时候，此时需要红黑树来加快查询速度，但是新增节点的效率变慢了。
+因为红黑树需要进行左旋，右旋，变色这些操作来保持平衡，而单链表不需要。 当元素小于8个的时候，此时做查询操作，链表结构已经能保证查询性能。当元素大于8个的时候，此时需要红黑树来加快查询速度，但是新增节点的效率变慢了。
 因此，如果一开始就用红黑树结构，元素太少，新增效率又比较慢，无疑这是浪费性能的。
    ```
 
@@ -4810,6 +5701,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 
    <details>
    <summary>答案</summary>
+
 
    ```c
 (1)多线程扩容，引起的死循环问题
@@ -4825,7 +5717,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 
    >1. 可重用代码
    >2. 保证代码可靠性
-   >    3.使代码更易于被他人理解。
+   >   3.使代码更易于被他人理解。
 
    **单例模式**：保证一个类仅有一个实例，并提供一个访问它的全局访问点。
    **适配器模式**：
@@ -4840,6 +5732,7 @@ b. 区别在于，在删除某个节点的时候，最坏情况下，AVL树需�
 
 <details>
 <summary>代码</summary>
+
 
 ```c
 #include <iostream>
@@ -4862,7 +5755,7 @@ private:
 	
        //将拷贝构造和赋值构造成为私有函数，禁止外部拷贝和赋值
 	SingleInstance(const SingleInstance &signal);//拷贝构造
-	const SingleInstance &operator(const SingleInstance &signal);//const 防止对实参的意外修改
+	const SingleInstance &operator=(const SingleInstance &signal);//const 防止对实参的意外修改
 	//使用引用的原因
 //	因为实参是通过按值传递机制传递的。在可以传递对象cigar之前，编译器需要安排创建该对象的副本。因此，编译器为了处理复制构造函数的这条调用语句，需要调用复制构造函数来创建实参的副本。但是，由于是按值传递，第二次调用同样需要创建实参的副本，因此还得调用复制构造函数，就这样持续不休。最终得到的是对复制构造函数的无穷调用。（其实就是创建副本也是需要调用复制构造函数的）
 //所以解决办法先是要将形参改为引用形参：
@@ -4960,6 +5853,7 @@ int main(void)
 <details>
 <summary>饿汉式</summary>
 
+
 ```c
 //初始化静态成员变量	
 #if 0 懒汉模式 
@@ -4989,9 +5883,12 @@ SingleInstance* SingleInstance::GetInstance()
 </details>
 
    >1.[小林设计模式](https://www.cnblogs.com/xiaolincoding/p/11437231.html)
+
 ##### 79.1_1. 单例模式中的懒汉式与饿汉式的区别
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 加锁与否的区别：懒汉式需要加锁，执行效率会较低。饿汉式不需要加锁，执行效率相对较高。
@@ -5002,6 +5899,7 @@ SingleInstance* SingleInstance::GetInstance()
   懒汉式是以时间换空间(懒汉式需要加锁，饿汉式不需要加锁，加锁会降低程序的运行效率。但初始化时就创建对象容易产生无用的对象，浪费空间) 。所以懒汉式适用于访问量较小的场所，代码量相对较少。
   饿汉式是以空间换时间(与上面的原因是相同的),适用于访问量较大的情况下，或者线程比较多的情况下。
 ```
+
 </details>
 
 
@@ -5019,6 +5917,7 @@ SingleInstance* SingleInstance::GetInstance()
 <details>
 <summary>答案</summary>
 
+
 ```c
  简单工厂模式（Simple Factory Pattern）属于类的创新型模式，又叫静态工厂方法模式（Static FactoryMethod Pattern）,是通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类。一个工厂，多个产品。产品需要有一个虚基类。通过传入参数，生成具体产品对象，并利用基类指针指向此对象。通过工厂获取此虚基类指针，通过运行时多态，调用子类实现。
 
@@ -5034,14 +5933,17 @@ SingleInstance* SingleInstance::GetInstance()
       ```c
         工厂方法模式定义了一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到子类。把简单工厂模式中的工厂类抽象出一个接口，这个接口只有一个方法，就是创建抽象产品的工厂方法。然后所有的要生产具体类的工厂，就去实现这个接口，这样，一个简单工厂模式的工厂类，就变成了一个工厂抽象接口和多个具体生成对象的工厂。**连type都是由工厂方法去创建的。**
       ```
-    
+
+
       </details>
+
       3. 抽象工厂模式：抽象工厂模式是提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。
 
 ### 81. extern“C”{}有什么用？
 
 <details>
 <summary>答案</summary>
+
 
 ```c
      extern "C"的主要作用就是为了能够正确实现C++代码调用其他C语言代码。加上extern "C"后，**会指示编译器这部分代码按C语言的进行编译**，而不是C++的。由于C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而C语言并不支持函数重载，因此编译C语言代码的函数时不会带上函数的参数类型，一般之包括函数名。
@@ -5061,6 +5963,7 @@ SingleInstance* SingleInstance::GetInstance()
 <details>
 <summary>答案</summary>
 
+
 ```c
    **一. 作用于函数内部的局部变量**
    局部作用域静态变量的特点：当一个函数返回后，下一次再调用时，该变量还会保持上一回的值，函数内部的静态变量只开辟一次空间，且不会因为多次调用产生副本，也不会因为函数返回而失效。也就是修饰的该变量被所有实例所共享，也就是说当某个实例修改了该变量的时候，其修改值为该类的所有实例所见。
@@ -5079,6 +5982,7 @@ SingleInstance* SingleInstance::GetInstance()
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5107,6 +6011,7 @@ SingleInstance* SingleInstance::GetInstance()
 
 
 
+
 ```c
  reserve是容器预留空间，但并不真正创建元素对象，在创建对象之前，不能引用容器内的元素，因此当加入新的元素时，需要用push_back()/insert()函数。
    resize是改变容器的大小，并且创建对象，因此，调用这个函数之后，就可以引用容器内的对象了，因此当加入新的元素时，用operator[]操作符，或者用迭代器来引用元素对象。
@@ -5125,6 +6030,7 @@ SingleInstance* SingleInstance::GetInstance()
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5156,21 +6062,21 @@ vector中remove的作用是把元素放到vector的末尾，但并不减少vecto
 <details>
 <summary>答案</summary>
 
-```c
 
-##### Vector
+```c
+`1. Vector`
    **底层实现**
    使用数组实现。
    **增**：O(1),**删**：O(N),**改**：O(1），**查**：O(1)
   **vector**是可以快速地在最后添加删除元素,并可以快速地访问任意元素
-##### list
+`2. list`
    **底层实现**
    双向链表
   **list**是可以快速地在所有地方添加删除元素,但是只能快速地访问最开始与最后的元素
-##### map
+`3. map`
    **底层实现**
    红黑树
-##### deque
+`4. deque`
 deque在开始和最后添加元素都一样快,并提供了随机访问方法,像vector一样使用[]访问任意元素,但是随机访问速度比不上vector快,因为它要内部处理堆跳转。deque也有保留空间.另外,由于deque不要求连续空间,所以可以保存的元素比vector更大,这点也要注意一下.还有就是在前面和后面添加元素时都不需要移动其它块的元素,所以性能也很高。
 deque 的最大任务就是在这些分段的连续空间上，维护其整体连续的假象，并提供随机存取的接口。deque为了维持整体连续的假象，设计一个中控器，其用来记录deque内部每一段连续空间的地址。大体上可以理解为deque中的每一段连续空间分布在内存的不连续空间上，然后用一个所谓的map作为主控，记录每一段内存空间的入口，从而做到整体连续的假象。
 ```
@@ -5190,6 +6096,7 @@ deque 的最大任务就是在这些分段的连续空间上，维护其整体�
 <summary>答案</summary>
 
 
+
 ```c
 在程序执行之前完成所有的组装工作，生成一个可执行的目标文件（EXE文件）。
 ```
@@ -5202,6 +6109,7 @@ deque 的最大任务就是在这些分段的连续空间上，维护其整体�
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5230,6 +6138,7 @@ deque 的最大任务就是在这些分段的连续空间上，维护其整体�
 
 
 
+
 ```c
    (1) 装载时动态链接(Load-time Dynamic Linking)：这种用法的前提是在编译之前已经明确知道要调用DLL中的哪几个函数，编译时在目标文件中只保留必要的链接信息，而不含DLL函数的代码；当程序执行时，调用函数的时候利用链接信息加载DLL函数代码并在内存中将其链接入调用程序的执行空间中(全部函数加载进内存），其主要目的是便于代码共享。（动态加载程序，处在加载阶段，主要为了共享代码，共享代码内存）
 
@@ -5248,6 +6157,7 @@ deque 的最大任务就是在这些分段的连续空间上，维护其整体�
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 出现的原因：
@@ -5277,6 +6187,7 @@ Test(Test && t): arr(t.arr) {
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -5316,6 +6227,7 @@ T&& && –> T&&.
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -5361,6 +6273,7 @@ d.T&& && => T&&
 
 
 
+
 ```c
 一种通过作用域访问符::来明确调用。
 一种是引入虚拟继承。虚继承的特点是，在任何派生类中的virtual基类总用同一个（共享）对象表示
@@ -5371,6 +6284,7 @@ d.T&& && => T&&
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5395,6 +6309,7 @@ d.T&& && => T&&
 
 
 
+
 ```c
 1. 结构体是很多数据的结构，里面不能有对这些数据的操作，而类class是数据以及对这些数据的操作的封装，是面向对象的基础。
 2. class对成员变量有访问控制权限的控制，而struct是没有的，而在struct外可以访问结构体任何一个变量，而在类外，是不可以访问private的成员变量。
@@ -5415,6 +6330,7 @@ d.T&& && => T&&
 <summary>答案</summary>
 
 
+
 ```c
    >1. struct:
 分配空间的区别:在存储多个成员信息的时候，编译器会自动struct第几个成员分配存储空间，struct可以存储多个成员信息。sizeof(struct)是内存对齐后所有成员长度的加和。而union中每个成员共用一个存储空间，一般其大小是最大的元素的空间，若有分匹配值，则只存储最后一个成员的信息。分配给union的内存size 由类型最大的元素 size 来确定
@@ -5428,6 +6344,7 @@ d.T&& && => T&&
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5446,6 +6363,7 @@ d.T&& && => T&&
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -5470,6 +6388,7 @@ d.T&& && => T&&
 
 
 
+
 ```c
   1. C语言中的结构体不能为空。要求至少有一个结构或联合至少有一个成员。
   2. C语言中的结构体是将数据与算法分开的。也就是说C语言中的结构体只能定义成员变量，不能定义成员函数。
@@ -5482,14 +6401,24 @@ d.T&& && => T&&
 
 #### 97_4、如何计算结构体的长度?
 
+<details>
+<summary>答案</summary>
+
+
+```c
 1. 结构体中成员的偏移量应该是成员大小的倍数。
 
 2. 结构体的大小是结构体最大成员的倍数。
+```
+
+</details>
+
 
 ### 98. 哈希算法原理？
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5515,6 +6444,7 @@ d.T&& && => T&&
 <summary>mutable</summary>
 
 
+
 ```c
    在类中声明变量时加入mutable关键字，可以在const成员函数中修改该类的数据成员。
    在C++中，mutable是为了**突破const的限制**而设置的。被mutable修饰的变量，将永远处于可变的状态，即使在一个const函数中，甚至结构体变量或者类对象为const，其mutable成员也可以被修改。
@@ -5531,6 +6461,7 @@ d.T&& && => T&&
 
 <details>
 <summary>volatile</summary>
+
 
 ```c
  1. 遇到这个关键字声明的变量，编译器对访问该变量的代码就不再进行优化，从而可以提供对特殊地址的稳定访问。
@@ -5551,6 +6482,7 @@ d.T&& && => T&&
 <summary>volatile的使用场景</summary>
 
 
+
 ```c
    　　1、中断服务程序中修改的供其它程序检测的变量需要加volatile；
    　　2、多任务环境下各任务间共享的标志应该加volatile；
@@ -5561,6 +6493,7 @@ d.T&& && => T&&
 
 <details>
 <summary>示例</summary>
+
 
 
 ```c
@@ -5577,6 +6510,7 @@ int b = i;  //其他代码，并未明确告诉编译器，对i进行过操作
 
 <details>
 <summary>答案</summary>
+
 
 ```c
   std::vector的reserve和resize的区别
@@ -5613,6 +6547,7 @@ int b = i;  //其他代码，并未明确告诉编译器，对i进行过操作
 <details>
 <summary>答案</summary>
 
+
 ```c
 可以基于伙伴系统实现，也可以使用基于链表的实现 
 1. 将所有空闲内存块连成链表，每个节点记录空闲内存块的地址、大小等信息
@@ -5626,8 +6561,10 @@ int b = i;  //其他代码，并未明确告诉编译器，对i进行过操作
 
 
 #### 101.2 在Linux下是如何使用malloc的？
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 若申请分配的内存小于128k。调用brk函数，其主要移动_enddata指针(该指针指向的是堆段的末尾地址，而不是数据段的末尾地址）。
@@ -5655,17 +6592,16 @@ int b = i;  //其他代码，并未明确告诉编译器，对i进行过操作
 6. 既然 brk 那么牛逼，为什么不全部使用 brk 来分配？
 随着系统频繁地 malloc 和 free ，尤其对于小块内存，堆内将产生越来越多不可用的碎片，导致“内存泄露”。而这种“泄露”现象使用 valgrind 是无法检测出来的。
 ```
+
 </details>
 
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2874033858b14f18b843f72869a7bc67.png)
+
 #### 101. 3 malloc管理内存的方式
 
 <details>
 <summary>答案</summary>
-
-
-
 
 
 ```c
@@ -5692,9 +6628,6 @@ int b = i;  //其他代码，并未明确告诉编译器，对i进行过操作
 <summary>答案</summary>
 
 
-
-
-
 ```c
 一个强引用当被引用的对象活着的话，这个引用也存在（就是说，当至少有一个强引用，那么这个对象就不能被释放）。share_ptr就是强引用。相对而言，弱引用当引用的对象活着的时候不一定存在。仅仅是当它存在的时候的一个引用。弱引用并不修改该对象的引用计数，这意味这弱引用它并不对对象的内存进行管理，在功能上类似于普通指针，然而一个比较大的区别是，弱引用能检测到所管理的对象是否已经被释放，从而避免访问非法内存。
 
@@ -5714,46 +6647,170 @@ int b = i;  //其他代码，并未明确告诉编译器，对i进行过操作
 
 ### 108. Qt的智能指针
 
-
-
-   > QSharedPointer对拥有的资源数进行计数，当计数为0时，自动释放指向的资源
-
-   > QPointer：特意用在QObject及其派生类上面。当其指向的对象呗删除后，能自动将指针置为NULL。
-
-   > QSharedDataPointer:解决隐式共享类的问题。
-
-   > QWeakPointer:解决QSharedPointer循环引用的问题。
+1. QSharedPointer
 
 <details>
 <summary>答案</summary>
 
 
+```c
+1. 作用： 对拥有的资源数进行计数，当计数为0时，自动释放指向的资源。QSharedPointer 内部维持着对拥有的内存资源的引用计数。QSharedPointer 是线程安全的，因此即使有多个线程同时修改 QSharedPointer 对象也不需要加锁。这里要特别说明一下，虽然 QSharedPointer 是线程安全的，但是 QSharedPointer 指向的内存区域可不一定是线程安全的。所以多个线程同时修改 QSharedPointer 指向的数据时还要应该考虑加锁的。
 
+2. 构造函数:
+a. QSharedPointer();//构造一个空的QSharedPointer
+b. QSharedPointer(T *ptr);//通过一个普通指针来构造一个QSharedPointer
+c. QSharedPointer(T *ptr,Delete deleter);
+d. QSharedPointer(std::nullptr_t);
+e. QSharedPointer(std::nullptr_t ,Deleter d);
+f. QSharedPointer(const QSharedPointer<T> &other);//用另一个QSharedPointer来构造一个QSharedPointer
+g. QSharedPointer(const QWeakPointer<T> &other);//用一个QWeakPointer来构造一个QSharedPointer
+
+3. QSharedPointer的使用
+static void doDeleteLater(Myobject *obj)
+{
+  obj->deleteLater();
+}
+
+void otherFunction()
+{
+  QSharedPointer<Myobject> obj = QSharedPointer<Myobject>(new MyObject,doDeleteLater);
+  obj.clear();
+}
+
+4. QSharedPointer的不足
+QSharedPointer不支持指向一个数组。
+```
+
+</details>
+
+
+2. QPointer
+
+<details>
+<summary>答案</summary>
 
 
 ```c
-  1. QSharedPointer:QSharedPointer 内部维持着对拥有的内存资源的引用计数。QSharedPointer 是线程安全的，因此即使有多个线程同时修改 QSharedPointer 对象也不需要加锁。这里要特别说明一下，虽然 QSharedPointer 是线程安全的，但是 QSharedPointer 指向的内存区域可不一定是线程安全的。所以多个线程同时修改 QSharedPointer 指向的数据时还要应该考虑加锁的。
-     2.QScopedPointer:QScopedPointer 类似于 C++ 11 中的 unique_ptr。当我们的内存数据只在一处被使用，用完就可以安全的释放时就可以使用 QScopedPointer。
-     3.QScopedArrayPointer:如果我们指向的内存数据是一个数组，这时可以用 QScopedArrayPointer。QScopedArrayPointer 与 QScopedPointer 类似，用于简单的场景。
-  2. QPointer:QPointer 与其他的智能指针有很大的不同。其他的智能指针都是为了自动释放内存资源而设计的。 QPointer 智能用于指向 QObject 及派生类的对象。当一个 QObject 或派生类对象被删除后，QPointer 能自动把其内部的指针设为 0。这样我们在使用这个 QPointer 之前就可以判断一下是否有效了。**这个能尽量避免产生野指针(悬挂指针)**。
-  3. QSharedDataPointer：这个类是帮我们实现数据的隐式共享的。我们知道 Qt 中大量的采用了隐式共享和写时拷贝技术。Qt 中隐式共享和写时拷贝就是利用 QSharedDataPointer 和 QSharedData 这两个类来实现的。如果对象将要被改变并且其引用计数大于1，隐式共享会自动的从共享块中分离该对象。（这经常被称为写时复制）。隐式共享类可以控制它自己的内部数据。在它的要修改数据的成员函数中，它会在修改数据之前自动的分离。
-     4.QWeakPointer：QWeakPointer不能用于直接取消引用指针，但它可用于验证指针是否已在另一个上下文中被删除。并且QWeakPointer对象只能通过QSharedPointer的赋值来创建。QWeakPointer不提供自动转换操作符来防止错误发生。即使QWeakPointer跟踪指针，也不应将其视为指针本身，因为它不能保证指向的对象保持有效。
+1）功能: QPointer 与其他的智能指针有很大的不同。其他的智能指针都是为了自动释放内存资源而设计的。 QPointer 智能用于指向 QObject 及派生类的对象。当一个 QObject 或派生类对象被删除后，QPointer 能自动把其内部的指针设为 0。这样我们在使用这个 QPointer 之前就可以判断一下是否有效了。**这个能尽量避免产生野指针(悬挂指针)**。
+
+2）使用
+QPointer<QLabel> label = new QLabel;
+label->setText("wuf");
+..
+if(label)
+  label->show();
+
+3）注意点: 当一个 QPointer 对象超出作用域时，并不会删除它指向的内存对象。这和其他的智能指针是不同的
+```
+
+</details>
+
+
+2. QSharedDataPointer
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1）功能: 解决隐式共享类的问题。Qt中大量使用的隐式共享和写时拷贝的技术。
+比如:
+QString str1 = "abcdefg";
+QString str2 = str1;
+QString str2[2] = 'X';
+
+第二行执行完后，str2 和 str1 指向的同一片内存数据。当第三句执行时，Qt 会为 str2 的内部数据重新分配内存。这样做的好处是可以有效的减少大片数据拷贝的次数，提高程序的运行效率。
+
+
+2） 
+```
+
+</details>
+
+
+3. QWeakPointer
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1）. 功能: 解决QSharedPointer循环引用的问题。QWeakPointer不能用于直接取消引用指针，但它可用于验证指针是否已在另一个上下文中被删除。并且QWeakPointer对象只能通过QSharedPointer的赋值来创建。QWeakPointer不提供自动转换操作符来防止错误发生。即使QWeakPointer跟踪指针，也不应将其视为指针本身，因为它不能保证指向的对象保持有效。
+```
+
+</details>
+
+
+4. QScopedPointer
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1）功能: 类似于 C++ 11 中的 unique_ptr。当我们的内存数据只在一处被使用，用完就可以安全的释放时就可以使用 QScopedPointer。
+
+2) 使用
+void myFunction(bool useSubClass)
+{
+  QScopedPointer<MyClass> = p(useSubClass ? new MyClass():new MySubClass);
+  QScopedPointer<QIODevice> device<handsOverOWnership>;
+  if(m_value>3)
+    return;
+  process(device);
+}
+```
+
+</details>
+
+5. QSharedDataPointer
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1） 功能: 这个类是帮我们实现数据的隐式共享的。我们知道 Qt 中大量的采用了隐式共享和写时拷贝技术。Qt 中隐式共享和写时拷贝就是利用 QSharedDataPointer 和 QSharedData 这两个类来实现的。如果对象将要被改变并且其引用计数大于1，隐式共享会自动的从共享块中分离该对象。（这经常被称为写时复制）。隐式共享类可以控制它自己的内部数据。在它的要修改数据的成员函数中，它会在修改数据之前自动的分离。
+```
+
+</details>
+
+6. QScopedArrayPointer
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1) 功能: 假如我们指向的是一个内存数据是一个数组的话。
+
+2) 使用
+void foo()
+{
+  QScopedArrayPointer<int> i(new int[10]);
+  i[2] = 42;
+  ...
+  return;
+}
 ```
 
 </details>
 
 ### 110.1 指针数组的使用？
 
-   > 主函数传参
+<details>
+<summary>答案</summary>
 
-   指针数组常用在主函数传参，在写主函数时，参数有两个，一个确定参数个数，一个是用指针数组用来接收每个参数（字符串）的地址。
-   `code`
 
-   ```c
+```c
+主函数传参
+指针数组常用在主函数传参，在写主函数时，参数有两个，一个确定参数个数，一个是用指针数组用来接收每个参数（字符串）的地址。
 int main(int argc, char *argv[])
-   ```
+此时可以想象内存映像图，主函数的栈区有一个叫argv的数组，这个数组的元素是你输入的参数的地址，指向着只读数据区。
+```
 
-   此时可以想象内存映像图，主函数的栈区有一个叫argv的数组，这个数组的元素是你输入的参数的地址，指向着只读数据区。
+</details>
+
 
 ### 111.c语言函数参数的入栈顺序为从右向左的原因？
 
@@ -5761,9 +6818,6 @@ int main(int argc, char *argv[])
 
 <details>
 <summary>答案</summary>
-
-
-
 
 
 ```c
@@ -5780,9 +6834,6 @@ C方式参数入栈顺序(从右至左)的好处就是可以动态变化参数�
 
 <details>
 <summary>答案</summary>
-
-
-
 
 
 ```c
@@ -5805,6 +6856,7 @@ C方式参数入栈顺序(从右至左)的好处就是可以动态变化参数�
 <details>
 <summary>答案</summary>
 
+
 ```c
    > CPU在单位时间内能一次处理的二进制数的位数
    > 通用寄存器的位数
@@ -5817,8 +6869,9 @@ C方式参数入栈顺序(从右至左)的好处就是可以动态变化参数�
    **区别二**：
    目前32位和64位是指CPU的通用寄存器位宽（数据总线的位宽），所以64位的CPU数据处理位宽是32位CPU的2倍;
 ```
+
 </details>
-   
+
 
 ### 118.数据结构中数组和链表的区别
 
@@ -5830,6 +6883,7 @@ C方式参数入栈顺序(从右至左)的好处就是可以动态变化参数�
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5867,6 +6921,7 @@ C方式参数入栈顺序(从右至左)的好处就是可以动态变化参数�
 <summary>答案</summary>
 
 
+
 ```c
 //摘自https://zh.cppreference.com/w/cpp/utility/move
 #include <iostream>
@@ -5890,10 +6945,12 @@ int main()
 
 </details>
 
- 
+
    **右值引用**：
+
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -5939,6 +6996,10 @@ int &a = getAA1();  //错误   非常量引用的初始值必须为左值，getA
 1)引用本身是目标变量或对象的别名，对引用的操作实际上是对目标变量或对象的操作，因此能使用引用时尽量用引用而非指针。
 
 2）用引用传递函数的参数，能保证参数在传递的过程中不产生临时变量（副本），从而提高传递效率，同时通过const的使用，还可以保证参数在传递过程中的安全性
+    
+6. 右值引用主要解决的问题：
+1） 第一个问题就是临时对象非必要的昂贵的拷贝操作。
+2） 第二个问题是在模板函数中如何按照参数的实际类型进行转发。
 
 ```
 
@@ -5947,6 +7008,7 @@ int &a = getAA1();  //错误   非常量引用的初始值必须为左值，getA
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -5970,6 +7032,7 @@ int &a = getAA1();  //错误   非常量引用的初始值必须为左值，getA
 
 
 
+
 ```c
 1. 纯右值：指的是临时变量和不跟对象关联的字面量值。
       2. 将亡值：表达式，表达式通常是需要被移动的对象。可理解为：通过“盗取”其他变量内存空间的方式获取到的值。在确保其他变量不再被使用、或即将被销毁时，通过“盗取”的方式可以避免内存空间的释放和分配，能够延长变量值的生命期。
@@ -5983,6 +7046,7 @@ int &a = getAA1();  //错误   非常量引用的初始值必须为左值，getA
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 函数原型：
@@ -6003,12 +7067,14 @@ typename remove_reference<T>::type&& move(T&& t)
 ### 130. 移动语义和完美转发
 
    > 主要就是避免有些地方其实就是使用简单的一个临时内存，却劳心费力的又复制了一大堆内存。使用移动语义，也就是移动构造函数，也就是将内存的所有权从一个对象转移到另一个对象。注意，原来的对象的值应该进行置空。不然，容易出现悬挂指针的问题。
+   > 悬挂指针： 如果一个地方指针既不为空，也没有指向一个已知的对象，这样的指针称为悬挂指针。它指向了一块没有分配给用户使用的内存。
 
 
    **移动构造函数的写法**
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6039,6 +7105,7 @@ MyString(MyString&& str) noexcept
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 各个硬件平台对存储空间的处理不尽相同，比如一些CPU访问特定的变量必须从特定的地址进行读取，所以在这种架构下就必须进行字节对齐了，要不然读取不到数据或者读取到的数据是错误的。
       2. 会对CPU的存取效率产生影响：比如有些平台CPU从内存中偶数地址开始读取数据，如果数据起始地址正好为偶数，则1个读取周期就可以读出一个int类型的值，而如果数据其实地址为奇数，那我们就需要2个读取周期读出数据，并对高地址和低地址进行拼凑，这在读取效率上显然已经落后了很多了。
@@ -6052,6 +7119,7 @@ MyString(MyString&& str) noexcept
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -6078,10 +7146,12 @@ typedef struct tag_t_MSG{
  [小心内存对齐](https://mp.weixin.qq.com/s?__biz=MzA5NTM3MjIxMw==&mid=2247485668&idx=1&sn=a65c63a03ecca1cd304b52e6a35fd1a0&chksm=90411e3ea73697285843f44debca6ff26a2629d01c61a518c2d5cfca1dd6e4c632f634763687&token=35003462&lang=zh_CN#rd)
 
 [内存对齐相关问题总结](https://blog.csdn.net/qq_35987777/article/details/106681389)
+
 ### 135.常量指针和指针常量区别
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6103,6 +7173,7 @@ typedef struct tag_t_MSG{
 <details>
 <summary>答案</summary>
 
+
 ```c
  1. **执行时间不同**：typedef在编译阶段有效，由于是在编译阶段，因此typedef有类型检测的功能。#define则是宏定义，发生在预处理阶段，也就是编译之前，只是进行简单而机械的字符串替换，而不进行类型检查。
 
@@ -6119,6 +7190,7 @@ typedef struct tag_t_MSG{
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 语法:
@@ -6162,8 +7234,10 @@ typedef定义的函数指针类型是比较方便和明了的，因为typedef实
 [参考](https://www.eet-china.com/mp/a103297.html)
 
 #### 137.1 使用typedef的好处
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 可以让代码更加清晰简洁。在定义结构体时可以省去struct.
@@ -6179,7 +7253,10 @@ typedef unsigned int U32
 1. typedef是一个存储类关键字，不能与auto、register、static、extern这些进行混用。在修饰一个变量时，不能同时使用一个以上的存储类关键字，否则编译会报错。
 
 2. typedef 的作用域是遵循代码块作用域与文件作用域的。
+    
+3. register的作用：为了提高某些自动类变量或函数参数的处理速度。若使用register修饰存储类标识代码块内的变量，编译器就会将变量缓存于处理器内的寄存器内，此情况不能对该变量或其成员变量进行取地址的操作，因为&只能获取内存空间中的地址。
 ```
+
 </details>
 
 ### 140. string的底层原理
@@ -6208,6 +7285,7 @@ typedef unsigned int U32
 <details>
 <summary>答案</summary>
 
+
 ```c
 //copy-on-write顾名思义，就是写时复制。大多数的string对象拷贝都是用于只读，每次都拷贝内存是没有必要的，而且也很消耗性能，这就有了写时复制机制，也就是把内存复制//延迟到写操作时，请看如下代码：
 string s = "Fuck the code.";
@@ -6230,6 +7308,7 @@ s1 += "I want it."; // 写操作，拷贝内存
 <summary>答案</summary>
 
 
+
 ```c
 1. QString 不用再考虑内存分配以及'\0'的问题。
 2. QString 中间是可以包含'\0'的。
@@ -6243,8 +7322,10 @@ s1 += "I want it."; // 写操作，拷贝内存
    ![在这里插入图片描述](https://img-blog.csdnimg.cn/c35b9b71cbb246a5a55702a9f2ba0b76.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAWue8lueoiw==,size_20,color_FFFFFF,t_70,g_se,x_16)
 
    **map, set, multimap, and multiset**
+
 <details>
 <summary>答案</summary>
+
 
 ```c
    >上述四种容器采用红黑树实现，红黑树是平衡二叉树的一种。不同操作的时间复杂度近似为:
@@ -6252,13 +7333,16 @@ s1 += "I want it."; // 写操作，拷贝内存
    >查看:O(logN)
    >删除:O(logN)
 ```
+
 </details>
 
 
 
    **hash_map, hash_set, hash_multimap, and hash_multiset**
+
 <details>
 <summary>答案</summary>
+
 
 ```c
    >上述四种容器采用哈希表实现，不同操作的时间复杂度为：
@@ -6267,6 +7351,7 @@ s1 += "I want it."; // 写操作，拷贝内存
    >删除:O(1)，最坏情况O(N)。
    >记住，如果你采用合适的哈希函数，你可能永远不会看到最坏情况。但是记住这一点是有必要的。
 ```
+
 </details>
 
 
@@ -6274,6 +7359,7 @@ s1 += "I want it."; // 写操作，拷贝内存
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6299,6 +7385,7 @@ s1 += "I want it."; // 写操作，拷贝内存
 
 
 
+
 ```c
 malloc与calloc的区别为1块与n块的区别：
    **alloca**:是向栈申请内存,因此无需释放. malloc分配的内存是位于堆中的,并且没有初始化内存的内容,因此基本上malloc之后,调用函数memset来初始化这部分的内存空间.
@@ -6314,6 +7401,7 @@ malloc与calloc的区别为1块与n块的区别：
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6333,6 +7421,7 @@ malloc与calloc的区别为1块与n块的区别：
 
 
 
+
 ```c
 因为 vetor、deque 使用了连续分配的内存，erase操作删除一个元素导致后面所有的元素都会向前移动一个位置，这些元素的地址发生了变化，所以当前位置到容器末尾元素的所有迭代器全部失效。 所以，如果还想获取迭代器新的元素位置的话，就在使用erase的时候，返回迭代器。
 ```
@@ -6343,6 +7432,7 @@ malloc与calloc的区别为1块与n块的区别：
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6359,6 +7449,7 @@ malloc与calloc的区别为1块与n块的区别：
 
 
 
+
 ```c
 对于关联容器(如 map, set,multimap,multiset)，删除当前的 iterator，仅仅会使当前的 iterator 失效，只要在 erase 时，递增当前 iterator 即可。这是因为 map 之类的容器，使用了红黑树来实现，插入、删除一个结点不会对其他结点造成影响。erase 迭代器只是被删元素的迭代器失效，但是返回值为 void，所以要采用erase(iter++)的方式删除迭代器。
 ```
@@ -6371,6 +7462,7 @@ malloc与calloc的区别为1块与n块的区别：
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -6389,6 +7481,7 @@ malloc与calloc的区别为1块与n块的区别：
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -6413,6 +7506,7 @@ malloc与calloc的区别为1块与n块的区别：
 <details>
 <summary>答案</summary>
 
+
 ```c
   1. 函数模板允许显式调用和隐式调用。而类模板只允许显式调用。
   2. **模板声明下面是函数就是函数模板，如果是类就叫类模板**。
@@ -6423,9 +7517,12 @@ class Person
 ```
 
 </details>
+
 ### 156. extern与static的区别
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. **前言**：变量的声明可以有多次，但定义只能有一次。
@@ -6437,13 +7534,15 @@ class Person
 3. **static的作用**
   >a. static在修饰全局变量的时候，其“全局”的范围其实只有其本身的cpp文件和.h文件。
 ```
+
 </details>
-   
+
 
 ### 157. 声明和定义的区别
 
 <details>
 <summary>声明的概念</summary>
+
 
 
 ```c
@@ -6460,6 +7559,7 @@ class Person
 
 <details>
 <summary>定义的概念</summary>
+
 
 
 
@@ -6482,6 +7582,7 @@ class Person
 
 
 
+
 ```c
 声明：一般在头文件中，对编译器说，这里我有一个函数叫function()让编译器知道这个函数的存在。
 定义：一般在源文件中，具体就是函数的实现过程，写明函数体。
@@ -6492,8 +7593,10 @@ class Person
 ### 158. STL集锦
 
 #### 158_1. priority_queue
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 	   1. 名字叫`优先队列`。底层是由堆实现的。
@@ -6514,6 +7617,7 @@ struct tmp2
 	}
 }
 ```
+
 </details>
 
 ### 159. 重写C函数
@@ -6522,6 +7626,7 @@ struct tmp2
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6539,6 +7644,7 @@ struct tmp2
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6568,6 +7674,7 @@ int main()
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -6632,6 +7739,7 @@ char * mycpy(char *dst, const char * src){
 
 
 
+
 ```c
 void Strncpy(char *dest, const char *src, size_t n) {
 	if(dest==NULL||src==NULL)
@@ -6658,6 +7766,7 @@ void Strncpy(char *dest, const char *src, size_t n) {
 <details>
 <summary>答案</summary>
 
+
 ```c
 ASSERT ()是一个调试程序时经常使用的宏，在程序运行时它计算括号内的表达式，如果表达式为FALSE (0), 程序将报告错误，并终止执行。 如果表达式不为0，则继续执行后面的语句。 这个宏通常原来判断程序中是否出现了明显非法的数据，如果出现了终止程序以免导致严重后果，同时也便于查找错误。
 ```
@@ -6677,6 +7786,7 @@ ASSERT ()是一个调试程序时经常使用的宏，在程序运行时它计�
 <summary>答案</summary>
 
 
+
 ```c
 1、复制的内容不同。strcpy只能复制字符串，而memcpy可以复制任意内容，例如字符数组、整型、结构体、类等。
     
@@ -6691,6 +7801,7 @@ ASSERT ()是一个调试程序时经常使用的宏，在程序运行时它计�
 
 <details>
 <summary>如何重写memcpy提升其效率</summary>
+
 
 ```c
 //若按之前的方法一个字节一个自己的赋值性能太低，原因是：
@@ -6856,6 +7967,7 @@ void MY::*MyMemcpy2(void *dst,const void *src,int n)
    <details>
 <summary>strcpy的重写</summary>
 
+
  ```c
 //void * :可以被赋值为任意类型指针对象，但不能做类似 ++、-- 等操作，需要类型转换才可以
 void *my_memcpy(void *src,const void *src,int n)
@@ -6888,6 +8000,7 @@ void *my_memcpy(void *src,const void *src,int n)
 <details>
 <summary>答案</summary>
 
+
 ```c
 //memset的实现
 void *memset(void *s,int c,size_t n)
@@ -6909,6 +8022,7 @@ void *memset(void *s,int c,size_t n)
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 //strncpy的实现
@@ -6945,6 +8059,7 @@ char* strncpy(char* dst,const char* src,size_t n)
 <details>
 <summary>答案</summary>
 
+
 ```c
 //strcmp的实现
 //① str1小于str2，返回负值或者-1（VC返回-1）；
@@ -6972,6 +8087,7 @@ int  strcmp(const char* s1,const char* s2)
 <details>
 <summary>答案</summary>
 
+
 ```c
 //strlen的实现
 size_t strlen(const char* src)
@@ -6994,6 +8110,7 @@ size_t strlen(const char* src)
 
 
 
+
 ```c
    阻塞就是干不完不准回来，   
    非阻塞就是你先干，我现看看有其他事没有，完了告诉我一声
@@ -7009,6 +8126,7 @@ size_t strlen(const char* src)
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -7056,6 +8174,7 @@ b. 内联后，调用函数与被调用函数连成一大块代码，编译器�
 <details>
 <summary>答案</summary>
 
+
 ```c
 1. 该关键字是一种类型修饰符，遇到该关键字修饰的变量，编译器则不再进行优化，从而提供对特殊地址进行访问。
 2. 注意该修饰符修饰的变量是易变的，每次要用到这个变量的值时都要重新读取这个变量的值，而不是去读寄存器中的备份。
@@ -7070,6 +8189,7 @@ b. 内联后，调用函数与被调用函数连成一大块代码，编译器�
 <details>
 <summary>答案</summary>
 
+
 ```c
 作用：为了突破const的变量，由于const修饰的函数里是不能修改成员变量的状态的。但有时，我们需要在const函数里面修改一些与类状态无关的数据成员。
 mutable int m_B;
@@ -7081,6 +8201,7 @@ mutable int m_B;
 
 <details>
 <summary>作用</summary>
+
 
 
 ```c
@@ -7106,6 +8227,7 @@ mutable int m_B;
 
 
 
+
 ```c
       1. **隐藏**。static可以将某全局变量只隐藏在本文件之中，而不是对多个文件都可见。
       2. **保持变量内容的持久化**。
@@ -7118,6 +8240,7 @@ mutable int m_B;
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -7143,6 +8266,7 @@ mutable int m_B;
 
 
 
+
 ```c
       1. new遇到复杂结构，先调用operator new 分配内存，然后在分配的内存上调用构造函数。    
       2. newp[]遇到简单类型，new[]计算好大小后，调用opertor new。
@@ -7157,6 +8281,7 @@ mutable int m_B;
 <summary>答案</summary>
 
 
+
 ```c
       1. delete 简单数据类型默认就直接调用free函数进行释放内存。
       2. 复杂数据类型：先调用析构函数再调用operator delete。
@@ -7169,6 +8294,7 @@ mutable int m_B;
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -7202,6 +8328,7 @@ mutable int m_B;
 
 
 
+
 ```c
    函数体内初始化时在所有变量分配完内存才进行初始化操作的。
    而列表初始化则是在分配内存的时候 就进行初始化了。
@@ -7215,6 +8342,7 @@ mutable int m_B;
 
 <details>
 <summary>答案</summary>
+
 
 
 
@@ -7238,6 +8366,7 @@ mutable int m_B;
 <details>
 <summary>答案</summary>
 
+
 ```c
    首先需要明白一件事情，临时变量，在函数调用过程中是被压到程序进程的栈中的，当函数退出时，临时变量出栈，即临时变量已经被销毁，临时变量占用的内存空间没有被清空，但是可以被分配给其他变量，所以有可能在函数退出时，该内存已经被修改了，对于临时变量来说已经是没有意义的值了。
 
@@ -7255,10 +8384,12 @@ mutable int m_B;
 <details>
 <summary>答案</summary>
 
+
 ```c
 string s = "abc";
 const char* c_s = s.c_str();
 ```
+
 </details>
 
 #### 174_2. const char* 转string，直接赋值即可
@@ -7266,16 +8397,19 @@ const char* c_s = s.c_str();
 <details>
 <summary>答案</summary>
 
+
 ```c
 const char* c_s = "abs";
 string s(c_s);
 ```
+
 </details>
 
 #### 174_3. string 转char*
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 string s = "abs";
@@ -7284,6 +8418,7 @@ const int len = s.length();
 c = new char[len+1];
 strcpy(c,s.c_str());
 ```
+
 </details>
 
 #### 174_4. char* 转string
@@ -7291,10 +8426,12 @@ strcpy(c,s.c_str());
 <details>
 <summary>答案</summary>
 
+
 ```c
 char* c = "abc";
 string s(c);
 ```
+
 </details>
 
 #### 174_5. const char* 转char*
@@ -7302,27 +8439,33 @@ string s(c);
 <details>
 <summary>答案</summary>
 
+
 ```c
 const char*cpc = "abc";
 char* pc = new char[strlen(cpc)+1];
 strcpy(pc,cpc);
 ```
+
 </details>
+
 #### 174_6. char* 转const char*，直接赋值即可
 
 <details>
 <summary>答案</summary>
 
+
 ```c
 char* pc = "abc";
 const char* cpc = pc;
 ```
+
 </details>
 
 #### 174.7 描述char*,const char*,char* const,const char* const的区别？
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 char*:普通的字符指针
@@ -7337,6 +8480,7 @@ const char* const:即不能修改指针，也不能修改其指向的内容。
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 1. 非静态成员的大小。静态成员不占用类的大小，成员函数也不占用类的大小。
@@ -7355,6 +8499,7 @@ operator new /operator delete 是函数。
 <details>
 <summary>new operator</summary>
 
+
 ```c
 1. 调用operator new分配足够的空间，并调用相关对象的构造函数。
 2. 不可以重载。
@@ -7364,6 +8509,7 @@ operator new /operator delete 是函数。
 
 <details>
 <summary>operator new</summary>
+
 
 ```c
 1. 只分配所要求的空间，不调用相关对象的构造函数。当无法满足所要分配的空间时，
@@ -7382,6 +8528,7 @@ operator new /operator delete 是函数。
 <details>
 <summary>placement new</summary>
 
+
 ```c
 Placement new的返回值是这个被构造对象的地址(比如括号中的传递参数)。placement new主要适用于：在对时间要求非常高的应用程序中，因为这些程序分配的时间是确定的（因为如果用new的话，则会增加一个寻找合适内存空间的时间）；长时间运行而不被打断的程序；以及执行一个垃圾收集器 (garbage collector)。
 **作用**：若在预分配的内存上创建对象，用缺省的new操作符是行不通的。可以用placement new 来分配内存，它允许你创建一个新对象到预分配的内存上。
@@ -7396,6 +8543,7 @@ Placement new的返回值是这个被构造对象的地址(比如括号中的传
 
 <details>
 <summary>答案</summary>
+
 
 ```c
       1. 内存管家上任之后做了以下几件事情：
@@ -7443,6 +8591,7 @@ Placement new的返回值是这个被构造对象的地址(比如括号中的传
 <details>
 <summary>答案</summary>
 
+
 ```c
    a. 避免重复定义变量；
    b. 避免引入函数定义/声明文件，从而函数文件发生更改时不会重新编译依赖文件。
@@ -7458,6 +8607,7 @@ Placement new的返回值是这个被构造对象的地址(比如括号中的传
 
 <details>
 <summary>答案</summary>
+
 
 ```c
 规则：定义只能有一个。	头文件中应该只放变量和函数的声明，而不能放他们的定义。
@@ -7489,6 +8639,7 @@ Placement new的返回值是这个被构造对象的地址(比如括号中的传
 <details>
 <summary>头文件中双引号和尖括号的区别</summary>
 
+
 ```c
 1. 系统自带的头文件用尖括号括起来，这样编译器会在系统文件目录下查找。
     
@@ -7503,6 +8654,7 @@ C语言中:
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -7532,6 +8684,7 @@ C++中:
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -7564,7 +8717,6 @@ int main()
 所以:
 1. 全局对象的构造函数会在main 函数之前执行，
 2. 全局对象的析构函数会在main函数之后执行;
-3. 全局对象的析构函数会在main函数之后执行
 ```
 
 </details>
@@ -7573,6 +8725,7 @@ int main()
 
 <details>
 <summary>答案</summary>
+
 
 
 ```c
@@ -7585,8 +8738,10 @@ int main()
 </details>
 
 ### 182. 请你自己实现一下读写锁
+
 <details>
 <summary>答案</summary>
+
 
 ```c
 class readWriteLock{
@@ -7604,7 +8759,7 @@ public:
 		{
 			writeMtx.lock();	
 		}	
-		readMtx.lock();//然后，就可以释放这个锁了。 
+		readMtx.unlock();//然后，就可以释放这个锁了。 
 	} 
 	
 	void readUnlock()//释放读锁的时候 
@@ -7627,6 +8782,7 @@ public:
 	}
 }; 
 ```
+
 </details>
 
 ### 183. 一个函数的各个变量的存放方式
@@ -7634,12 +8790,13 @@ public:
 <details>
 <summary>答案</summary>
 
+
 ```c
 //main.cpp
 int a = 0; //全局初始化区
 int a = 0; //全局初始化区
 char *p1; //全局未初始化区
-main() {
+int main() {
     int b; //栈
     char s[] = "abc"; //栈
     char *p2; //栈
@@ -7651,11 +8808,41 @@ main() {
     strcpy(p1, "123456"); //123456\0放在常量区，编译器可能会将它与p3所指向的"123456"优化成一个地方。
 }
 ```
+
 </details>
 
 ### 184. Socket通讯流程
+
+1. socket 简便流程
+
 <details>
 <summary>答案</summary>
+
+
+```c
+listenfd = socket();   // 打开一个网络通信端口
+bind(listenfd);        // 绑定
+listen(listenfd);      // 监听
+while(1) {
+  connfd = accept(listenfd);  // 阻塞建立连接
+  int n = read(connfd, buf);  // 阻塞读数据
+  doSomeThing(buf);  // 利用读到的数据做些什么
+  close(connfd);     // 关闭连接，循环等待下一个连接
+}
+```
+
+</details>
+
+![](https://img-blog.csdnimg.cn/img_convert/ac79bccc02a4859021b72f657c2b8b82.gif)
+
+
+[参考：你管这破玩意叫 IO 多路复用？](https://mp.weixin.qq.com/s/xPKUQnda42EAPyoNKxIGhA)
+
+2. socket详细流程
+
+<details>
+<summary>答案</summary>
+
 
 ```c
 1. 每个进程在PCB(Process Control Block)中保存着一份文件描述符表，文件描述符就是这个表的索引，每个表项都有一个指向已打开文件的指针。
@@ -7677,7 +8864,6 @@ struct sockaddr_in{
 	sa_family_t sin_familt;/* address family: AF_INET */
 	int_port_t  sin_port;/* port in network byte order */
 	struct in_addr sin_addr;/* internet address */
-	
 };
 
 /* Internet address. */
@@ -7839,7 +9025,7 @@ int main(int argc, char** argv)
     if( inet_pton(AF_INET, argv[1], &servaddr.sin_addr) <= 0){
     printf("inet_pton error for %s\n",argv[1]);
     exit(0);
-    }
+    }//将点分十进制的Ip转成二进制的
  
  
     if( connect(sockfd, (struct sockaddr*)&servaddr, sizeof(servaddr)) < 0){
@@ -7866,6 +9052,284 @@ int main(int argc, char** argv)
 }
 
 ```
+
+</details>
+
+
+### 185. 互斥锁的实现原理?
+
+<details>
+<summary>答案</summary>
+
+
+```c
+其实锁就是一块内存，当这个空间被赋予1的时候表示被加锁了，被赋值为0的时候表示解锁了。可以用一条“无法继续分割的”汇编指令实现判断变量值，并依据是否为0进行置位。
+1. X86平台中CMPXCHG(加上Lock prefix) ,能够完成atomic的compare and swap(CAS). 指令中加了Lock前缀，意味着锁定总线实现atomicity.
+2. linux上是实现futex。OS需要一些全局数据结构来记录被挂起线程和对应的锁之间的关系。
+```
+
+</details>
+
+### 186. 如何让类对象只在栈或堆上分配空间？
+
+<details>
+<summary>答案</summary>
+
+
+```c
+在C++中，类的对象建立分为两种，一种是静态建立，如A a；另一种是动态建立，如A* ptr=new A；
+
+1、静态建立类对象：是由编译器为对象在栈空间中分配内存，是通过直接移动栈顶指针，挪出适当的空间，然后在这片内存空间上调用构造函数形成一个栈对象。使用这种方法，直接调用类的构造函数。
+
+2、动态建立类对象：是使用new运算符将对象建立在堆空间中。这个过程分为两步，第一步是执行operator new()函数，在堆空间中搜索合适的内存并进行分配；第二步是调用构造函数构造对象，初始化这片内存空间。这种方法，间接调用类的构造函数。
+
+
+```
+
+</details>
+
+### 187. 封装、继承、多态的概念？
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、封装
+1) 结合性： 将数据和操作数据的方法进行结合。
+2）信息隐蔽性：利用接口机制隐藏内部实现细节，只留下接口给外界调用。
+3）实现代码重用。
+
+2、继承
+指的是从已有类产生新类的过程。
+
+3、多态
+简单概况就是“一个接口，多种方法",使用同一个接口，但效果各不相同。多态还有静态多态和动态多态之分。
+
+```
+
+</details>
+
+### 188. 面向过程和面向对象的区别
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、面向过程：分析出解决问题的步骤，然后用函数将这些步骤一步一步实现，使用的时候一个一个调用即可。
+优点：性能比面向对象高，因为类调用时需要实例化，开销比较大，比较消耗资源;比如单片机、嵌入式开发、 Linux/Unix等一般采用面向过程开发，性能是最重要的因素。
+
+缺点：没有面向对象易维护、易复用、易扩展
+
+2、面向对象： 把问题的事务分解成各个对象，建立对象的目的不是为了完成一个步骤，而是为了描述整个解决问题的步骤中的行为。
+优点：易维护、易复用、易扩展，由于面向对象有封装、继承、多态性的特性，可以设计出低耦合的系统，使系统 更加灵活、更加易于维护
+
+缺点：性能比面向过程低
+
+```
+
+</details>
+
+
+
+### 189. O0、O1、O2、O3优化
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、O0:  不做任何优化。
+    
+2、O1: 主要对代码的分支、常量、表达式进行优化，减少代码的尺寸，缩短执行周期。
+
+3、O2: 在O1打开的基础上，尝试更多寄存器级的优化以及指令级的优化。
+    
+4、O3: 在O2的基础上，例如使用伪寄存器网络，普通函数的内联。
+```
+
+</details>
+
+
+
+### 190. 如何定义一个只能在堆上（栈上）生成对象的类?
+
+[C++定义一个只能在堆上（栈上）生成对象的类](https://blog.csdn.net/niaolianjiulin/article/details/76165609)
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、在c++中，建立对象有两种方式，分为静态建立和动态建立:
+//静态建立
+A a;
+//动态建立
+A *a = new A; 
+1）静态建立对象：由编译器自动在栈中分配内存，直接移动栈顶指针，腾出适当的空间，然后再在这片空间上调用构造函数生成对象，这种静态建立是直接调用类的构造函数。
+2）动态建立对象：程序员使用new运算符在堆中建立。过程分两步，第一步是调用Operator new函数在堆空间搜索出来适当的内存并进行分配；第二部是调用构造函数生成对象，初始化这片内存空间，间接调用构造函数。
+    
+2、只能在堆上生成对象的类：
+1）只能在堆上也就意味着不能再栈上，在栈上是编译器分配内存空间，构造函数来构造栈对象。在栈上当对象周期完成，编译器会调用析构函数来释放栈对象所占的空间，也就是说编译器管理了对象的整个生命周期。
+2）编译器在调用构造函数为类的对象分配空间时，会先检查析构函数的访问性，不光是析构函数，编译器会检查所有非静态函数的访问性。
+3）因此，如果类的析构函数是私有的，编译器不会为对象在栈上分配内存空间。	
+所以比较合适的是这种方式：
+
+class A {
+protected:
+    A() { cout << "constructor" << endl; }
+    ~A() { cout << "destructor" << endl; }
+public:
+    static A * create()
+    {
+        return new A();
+    }
+    void destory()
+    {
+        delete this;
+    }
+};
+
+A * p1 = A::create();
+cout << &(*p1) << endl;
+p1->destory();
+
+把构造函数，析构函数都弄为protected.自己是可以调用的，也保证了自己的子类也是可以调用的。但是防止了编译器的调用。这样就可以实现只能在堆上建立对象了。
+    
+3、只能在栈上生成对象：
+只有使用New运算符，对象才会建立在堆上，因此禁用new就可实现。将operator new（）重载设为私有即可。
+
+class D{
+    private:
+    	void *operator new(size_t){}
+    	void operator delete(void *ptr){}
+    public:
+    	D(){}
+    	~D(){}
+}
+
+//error:函数不可访问
+D *P4 = new D;
+
+```
+
+</details>
+
+
+
+### 191. 什么不能被继承？
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、构造函数不能被继承
+1） 
+```
+
+</details>
+
+
+
+### 192. 内存泄漏相关知识
+
+#### 1、内存泄漏的原因？
+
+
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、malloc/new 和delete/free没有匹配。
+
+2、new[]和delete[]也没有匹配。
+
+3、没有将父类的析构函数定义为虚函数，当父类的指针指向子类对象时，delete该对象不会调用子类的析构函数。
+```
+
+</details>
+
+
+
+#### 2、检测手段
+
+<details>
+<summary>答案</summary>
+
+
+```c
+1、良好的程序设计能力，将new都放在构造函数中，将delete都放在析构函数中。保证任何资源的释放都在析构函数中进行。
+2、智能指针。
+3、valgrind,这个可以打印出发生内存泄漏的代码。
+4、linux使用swap命令观察还有多少可以用的交换空间，两三分钟内执行三四次，肉眼观察是否变小了。 `free -m`查看swap的大小。
+5、使用netstat、vmstat等。如果发现波段中有内存被分配且没有被释放，有可能进程出现了内存泄漏。
+    
+`netstat -natp`
+    
+```
+
+</details>
+
+```c
+r 表示运行队列(就是说多少个进程真的分配到CPU)，我测试的服务器目前CPU比较空闲，没什么程序在跑，当这个值超过了CPU数目，就会出现CPU瓶颈了。这个也和top的负载有关系，一般负载超过了3就比较高，超过了5就高，超过了10就不正常了，服务器的状态很危险。top的负载类似每秒的运行队列。如果运行队列过大，表示你的CPU很繁忙，一般会造成CPU使用率很高。
+
+b 表示阻塞的进程,这个不多说，进程阻塞，大家懂的。
+
+swpd 虚拟内存已使用的大小，如果大于0，表示你的机器物理内存不足了，如果不是程序内存泄露的原因，那么你该升级内存了或者把耗内存的任务迁移到其他机器。
+
+free   空闲的物理内存的大小，我的机器内存总共8G，剩余3415M。
+
+buff   Linux/Unix系统是用来存储，目录里面有什么内容，权限等的缓存，我本机大概占用300多M
+
+cache cache直接用来记忆我们打开的文件,给文件做缓冲，我本机大概占用300多M(这里是Linux/Unix的聪明之处，把空闲的物理内存的一部分拿来做文件和目录的缓存，是为了提高 程序执行的性能，当程序使用内存时，buffer/cached会很快地被使用。)
+
+si  每秒从磁盘读入虚拟内存的大小，如果这个值大于0，表示物理内存不够用或者内存泄露了，要查找耗内存进程解决掉。我的机器内存充裕，一切正常。
+
+so  每秒虚拟内存写入磁盘的大小，如果这个值大于0，同上。
+
+bi  块设备每秒接收的块数量，这里的块设备是指系统上所有的磁盘和其他块设备，默认块大小是1024byte，我本机上没什么IO操作，所以一直是0，但是我曾在处理拷贝大量数据(2-3T)的机器上看过可以达到140000/s，磁盘写入速度差不多140M每秒
+
+bo 块设备每秒发送的块数量，例如我们读取文件，bo就要大于0。bi和bo一般都要接近0，不然就是IO过于频繁，需要调整。
+
+in 每秒CPU的中断次数，包括时间中断
+
+cs 每秒上下文切换次数，例如我们调用系统函数，就要进行上下文切换，线程的切换，也要进程上下文切换，这个值要越小越好，太大了，要考虑调低线程或者进程的数目,例如在apache和nginx这种web服务器中，我们一般做性能测试时会进行几千并发甚至几万并发的测试，选择web服务器的进程可以由进程或者线程的峰值一直下调，压测，直到cs到一个比较小的值，这个进程和线程数就是比较合适的值了。系统调用也是，每次调用系统函数，我们的代码就会进入内核空间，导致上下文切换，这个是很耗资源，也要尽量避免频繁调用系统函数。上下文切换次数过多表示你的CPU大部分浪费在上下文切换，导致CPU干正经事的时间少了，CPU没有充分利用，是不可取的。
+
+us 用户CPU时间，我曾经在一个做加密解密很频繁的服务器上，可以看到us接近100,r运行队列达到80(机器在做压力测试，性能表现不佳)。
+
+sy 系统CPU时间，如果太高，表示系统调用时间长，例如是IO操作频繁。
+
+id  空闲 CPU时间，一般来说，id + us + sy = 100,一般我认为id是空闲CPU使用率，us是用户CPU使用率，sy是系统CPU使用率。
+
+wt 等待IO CPU时间。
+```
+
+
+
+3、ValGrind的使用
+
+[使用 Valgrind 检测 C++ 内存泄漏](http://senlinzhan.github.io/2017/12/31/valgrind/)
+
+
+
+## 193、什么是原子操作？
+
+<details>
+<summary>答案</summary>
+
+
+```c
+所谓的原子操作，取的就是“原子是最小的、不可分割的最小个体”的意义，它表示在多个线程访问同一个全局资源的时候，能够确保所有其他的线程都不在同一时间内访问相同的资源。也就是他确保了在同一时刻只有唯一的线程对这个资源进行访问。这有点类似互斥对象对共享资源的访问的保护，但是原子操作更加接近底层，因而效率更高。
+
+互斥对象的使用，保证了同一时刻只有唯一的一个线程对这个共享进行访问，从执行的结果来看，互斥对象保证了结果的正确性，但是也有非常大的性能损失
+
+在以往的C++标准中并没有对原子操作进行规定，我们往往是使用汇编语言，或者是借助第三方的线程库，例如intel的pthread来实现。在新标准C++11，引入了原子操作的概念，并通过这个新的头文件提供了多种原子操作数据类型，例如，atomic_bool,atomic_int等等，如果我们在多个线程中对这些类型的共享资源进行操作，编译器将保证这些操作都是原子性的，也就是说，确保任意时刻只有一个线程对这个资源进行访问，编译器将保证，多个线程访问这个共享资源的正确性。从而避免了锁的使用，提高了效率。
+```
+
 </details>
 
 ## 总结
@@ -7879,4 +9343,7 @@ int main(int argc, char** argv)
 1. [const修饰符总结](https://codeantenna.com/a/BO3sXaYMk3)
 2. [C++ 类内常量定义 static const](https://blog.csdn.net/u010272085/article/details/105330207)
 3. [单继承、多继承、菱形继承的虚函数表](https://blog.csdn.net/albertsh/article/details/103757118)
-4. [C++中函数调用时的三种参数传递方式详解](https://blog.csdn.net/ccblogger/article/details/77752659)
+4. [C++中函数调用时的三种参数传递方式详解](https://blog.csdn.net/ccblogger/article/details/77752659]()
+5. [C++八股文](https://github.com/guaguaupup/cpp_interview/blob/main/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93%E2%80%94C%2B%2B.md)
+6. [引用的本质](https://blog.csdn.net/K346K346/article/details/46805159)
+7. 
